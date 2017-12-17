@@ -1,0 +1,100 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 AndaleMono;\f2\fnil\fcharset0 Consolas;
+}
+{\colortbl;\red255\green255\blue255;\red47\green255\blue18;\red27\green29\blue31;\red235\green236\blue237;
+\red13\green0\blue129;\red36\green38\blue41;\red104\green26\blue29;\red43\green39\blue19;}
+\margl1440\margr1440\vieww13080\viewh10780\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 initial password for root: lwSdnVsQ!8kt\
+updated password for root: stanforddb\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f1 \cf2 \cb0 \CocoaLigature0 export PATH=$\{PATH\}:/usr/local/mysql/bin\
+\pard\pardeftab720
+
+\f2\fs26 \cf3 \cb4 \CocoaLigature1 mysql -u root -p -h 127.0.0.1 -p\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f0\fs24 \cf0 \cb1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 ################\
+\
+1. Download MySQL server community.\
+\
+Located here: {\field{\*\fldinst{HYPERLINK "https://dev.mysql.com/downloads/mysql/"}}{\fldrslt https://dev.mysql.com/downloads/mysql/}}\
+Once downloaded, open the .pkg (or other zip?) file, and step through the default instructions for the wizard.\
+When you are shown a temporary password, SAVE IT.\
+\
+2. Start your server\
+\
+in MAC: \
+a. cmd+space\
+b. search for \'94MYSQL\'94 (system preferences)\
+c. start it, and click box for \'93automatically start\'94\
+\
+3. Download MySQL workbench\
+\
+Located here: {\field{\*\fldinst{HYPERLINK "https://dev.mysql.com/downloads/workbench/"}}{\fldrslt https://dev.mysql.com/downloads/workbench/}}\
+\
+WARNING: download the latest version at your own peril. Instead, click on \'93Looking for Previous GA Versions?\'94 and download the penultimate version.\
+\
+Open it, then you should see \'93Local Instance 3306\'94. Click the little \'93i\'94 and then Edit Connection. Add your temporary password, and click Test Connection.\
+\
+4. Open a connection: double click on the Local Instance icon\
+\
+5. Update your password to something you want\
+\
+\pard\pardeftab720
+
+\f2\fs26 \cf5 \cb4 SET\cf6  PASSWORD \cf5 FOR\cf6  \cf7 'root'\cf6 @\cf7 'localhost'\cf6  = PASSWORD(\cf7 'mySuperSecretPassword'\cf6 );\cf8 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 \cb1 \
+6. Create a table\
+\
+\
+7. Insert\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f1 \cf2 \cb0 \CocoaLigature0 mysql -u root -h 127.0.0.1 -pstanforddb --database=stanford_ips < insert_rural_pop.sql\
+mysql: [Warning] Using a password on the command line \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0 \cf0 \cb1 \CocoaLigature1 \
+\
+\
+#############################################\
+# Other NOTES\
+\
+Longer timeout settings: \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+{\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/15712512/mysql-workbench-how-to-keep-the-connection-alive"}}{\fldrslt \cf0 https://stackoverflow.com/questions/15712512/mysql-workbench-how-to-keep-the-connection-alive}}\
+\
+Indexing best practice:\
+{\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/3049283/mysql-indexes-what-are-the-best-practices"}}{\fldrslt https://stackoverflow.com/questions/3049283/mysql-indexes-what-are-the-best-practices}}\
+\
+\
+################\
+# AWS Set up\
+\
+DB name = ips\
+DB master username = chriscoke\
+DB master passoword = stanfordips\
+\
+setup: {\field{\*\fldinst{HYPERLINK "https://aws.amazon.com/getting-started/tutorials/create-mysql-db/"}}{\fldrslt https://aws.amazon.com/getting-started/tutorials/create-mysql-db/}}\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f1 \cf2 \cb0 \CocoaLigature0 mysql -u chriscoke -h ips.c1gtakhzeor1.us-east-1.rds.amazonaws.com -pstanfordips --database=stanford_ips < create_tables.sql\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f0 \cf0 \cb1 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
+}
