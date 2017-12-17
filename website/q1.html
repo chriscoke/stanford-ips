@@ -130,10 +130,9 @@ mean( gdp$gdp_pcap[ set ] )</code></pre>
       </div>
       <div id="collapseB2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-select avg(gdp_pcap)
-from gdp_pcap
-where region_name = 'Argentina'
-and year between 2005 and 2016</code></pre>
+select max(health_exp)
+from health_exp
+where region_name = 'Chile'</code></pre>
       </div>
     </div>
 
@@ -144,8 +143,7 @@ and year between 2005 and 2016</code></pre>
       </div>
       <div id="collapseB3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
-mean( gdp$gdp_pcap[ set ] )</code></pre>
+max( health$health_exp[ health$region_name=='Chile' ], na.rm=T )</code></pre>
       </div>
     </div>
 
@@ -181,10 +179,10 @@ mean( gdp$gdp_pcap[ set ] )</code></pre>
       </div>
       <div id="collapseC2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-select avg(gdp_pcap)
+select sum(gdp_pcap)
 from gdp_pcap
-where region_name = 'Argentina'
-and year between 2005 and 2016</code></pre>
+where region_name in ('Belgium','Canada')
+and year = 2016</code></pre>
       </div>
     </div>
 
@@ -195,8 +193,7 @@ and year between 2005 and 2016</code></pre>
       </div>
       <div id="collapseC3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
-mean( gdp$gdp_pcap[ set ] )</code></pre>
+sum( gdp$gdp_pcap[ gdp$year == 2016 & gdp$region_name %in% c('Belgium', 'Canada') ] )</code></pre>
       </div>
     </div>
 
@@ -231,10 +228,7 @@ mean( gdp$gdp_pcap[ set ] )</code></pre>
       </div>
       <div id="collapseD2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-select avg(gdp_pcap)
-from gdp_pcap
-where region_name = 'Argentina'
-and year between 2005 and 2016</code></pre>
+Median is not easy with SQL...</code></pre>
       </div>
     </div>
 
@@ -245,8 +239,9 @@ and year between 2005 and 2016</code></pre>
       </div>
       <div id="collapseD3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
-mean( gdp$gdp_pcap[ set ] )</code></pre>
+v1 = median( pop$rural_pop[ pop$year==2010 ], na.rm=T )
+v2 = median( pop$rural_pop[ pop$year==2016 ], na.rm=T )
+c(v1, v2)</code></pre>
       </div>
     </div>
 
@@ -281,10 +276,9 @@ mean( gdp$gdp_pcap[ set ] )</code></pre>
       </div>
       <div id="collapseE12" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-select avg(gdp_pcap)
-from gdp_pcap
-where region_name = 'Argentina'
-and year between 2005 and 2016</code></pre>
+select avg(health_exp)
+from health_exp
+where year = 2014</code></pre>
       </div>
     </div>
 
@@ -295,8 +289,7 @@ and year between 2005 and 2016</code></pre>
       </div>
       <div id="collapseE13" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
-mean( gdp$gdp_pcap[ set ] )</code></pre>
+mean( health$health_exp[ health$year==2014 ], na.rm=T )</code></pre>
       </div>
     </div>
 
@@ -331,10 +324,12 @@ mean( gdp$gdp_pcap[ set ] )</code></pre>
       </div>
       <div id="collapseE22" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-select avg(gdp_pcap)
-from gdp_pcap
-where region_name = 'Argentina'
-and year between 2005 and 2016</code></pre>
+select sum(rp.rural_pop * he.health_exp)/sum(rp.rural_pop)
+from rural_pop rp
+join health_exp he 
+  on he.region_code = rp.region_code 
+  and he.year = rp.year
+where rp.year = 2014</code></pre>
       </div>
     </div>
 
@@ -345,8 +340,22 @@ and year between 2005 and 2016</code></pre>
       </div>
       <div id="collapseE23" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
-mean( gdp$gdp_pcap[ set ] )</code></pre>
+sum(health$health_exp[health$year==2014] * pop$rural_pop[pop$year==2014], na.rm=T ) / 
+  sum( pop$rural_pop[pop$year==2014], na.rm=T ) 
+
+// above only works if the tables health and pop have all countries in the same order. In case they don't:
+// first, merge the two tables accordingly
+new = merge(health, pop, by=c("region_code", "year"))
+
+// but wait, many of the columns got duplicated...
+names(new)
+
+// try again, now specifying only the new columns you want from the population table
+new = merge(health, pop[,c("region_code","year","rural_pop")], by=c("region_code", "year"))
+
+// and calculate
+sum(new$health_exp[new$year==2014] * new$rural_pop[new$year==2014], na.rm=T ) / 
+  sum( new$rural_pop[new$year==2014], na.rm=T ) </code></pre>
       </div>
     </div>
 
@@ -381,10 +390,9 @@ mean( gdp$gdp_pcap[ set ] )</code></pre>
       </div>
       <div id="collapseF2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-select avg(gdp_pcap)
-from gdp_pcap
-where region_name = 'Argentina'
-and year between 2005 and 2016</code></pre>
+select std(health_exp)
+from health_exp
+where year = 2014</code></pre>
       </div>
     </div>
 
@@ -395,8 +403,7 @@ and year between 2005 and 2016</code></pre>
       </div>
       <div id="collapseF3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
-mean( gdp$gdp_pcap[ set ] )</code></pre>
+sd( health$health_exp[ health$year == 2014 ] , na.rm=T)</code></pre>
       </div>
     </div>
 
@@ -431,10 +438,7 @@ mean( gdp$gdp_pcap[ set ] )</code></pre>
       </div>
       <div id="collapseG2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-select avg(gdp_pcap)
-from gdp_pcap
-where region_name = 'Argentina'
-and year between 2005 and 2016</code></pre>
+These are just other versions of median, still not easy in SQL...</code></pre>
       </div>
     </div>
 
@@ -445,8 +449,7 @@ and year between 2005 and 2016</code></pre>
       </div>
       <div id="collapseG3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
-mean( gdp$gdp_pcap[ set ] )</code></pre>
+quantile( health$health_exp[ health$year == 2014 ], p, na.rm=T )</code></pre>
       </div>
     </div>
 
@@ -481,10 +484,45 @@ mean( gdp$gdp_pcap[ set ] )</code></pre>
       </div>
       <div id="collapseH2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-select avg(gdp_pcap)
-from gdp_pcap
-where region_name = 'Argentina'
-and year between 2005 and 2016</code></pre>
+// Not Easy...but here it is. Come back to this later if you'd like.
+// MySQL does not have a correlation function (like it does for average, or standard deviation)
+// Remember, sample correlation coefficient equation: https://wikimedia.org/api/rest_v1/media/math/render/svg/bd1ccc2979b0fd1c1aec96e386f686ae874f9ec0
+
+select region_name, p1 / (sqrt(p2)*sqrt(p3)) as correl_coef
+from (
+select 
+  region_name, 
+  sum((x-xbar)*(y-ybar)) as p1,
+  sum(power(x-xbar,2)) as p2,
+  sum(power(y-ybar,2)) as p3
+from (
+select 
+  rp.region_name, 
+  rp.rural_pop as x, 
+  x.avg_pop as xbar, 
+  he.health_exp as y, 
+  x.avg_health as ybar
+from rural_pop rp
+join health_exp he on he.region_code = rp.region_code and he.year = rp.year
+join (
+  select 
+    rp.region_name,
+    avg(rp.rural_pop) as avg_pop, 
+    avg(he.health_exp) as avg_health 
+  from rural_pop rp
+  join health_exp he 
+    on he.region_code = rp.region_code 
+    and he.year = rp.year
+  where rp.region_name in ('Zimbabwe', 'Sweden', 'Philippines')
+  and rp.year between 2000 and 2014
+  group by rp.region_name
+) x on x.region_name = rp.region_name
+where rp.region_name in ('Zimbabwe', 'Sweden', 'Philippines')
+and rp.year between 2000 and 2014
+order by rp.region_name
+) y
+group by region_name
+) z</code></pre>
       </div>
     </div>
 
@@ -495,8 +533,14 @@ and year between 2005 and 2016</code></pre>
       </div>
       <div id="collapseH3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
-mean( gdp$gdp_pcap[ set ] )</code></pre>
+new = merge( health[ ,c("region_name","year","health_exp") ], 
+             pop[ ,c("region_name","year","rural_pop") ], 
+             by = c("region_name", "year") 
+)
+new = new[new$region_name %in% c('Zimbabwe', 'Sweden', 'Philippines'), ]   # only certain countries 
+new = new[new$year >= 2000 & new$year <= 2014, ]                           # only certain years
+new = new[ is.na(new$health_exp)==FALSE & is.na(new$rural_pop)==FALSE, ]   # only full records
+cor(new$rural_pop, new$health_exp)</code></pre>
       </div>
     </div>
 
@@ -531,10 +575,35 @@ mean( gdp$gdp_pcap[ set ] )</code></pre>
       </div>
       <div id="collapseI2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-select avg(gdp_pcap)
-from gdp_pcap
-where region_name = 'Argentina'
-and year between 2005 and 2016</code></pre>
+// Similar as above. Need to implement on our own the correlation formula
+
+select p1 / (sqrt(p2)*sqrt(p3)) as correl_coef
+from (
+select 
+  sum((x-xbar)*(y-ybar)) as p1,
+  sum(power(x-xbar,2)) as p2,
+  sum(power(y-ybar,2)) as p3
+from (
+select 
+  rp.rural_pop as x, 
+  x.avg_pop as xbar, 
+  he.health_exp as y, 
+  x.avg_health as ybar
+from rural_pop rp
+join health_exp he on he.region_code = rp.region_code and he.year = rp.year
+cross join (
+  select 
+    avg(rp.rural_pop) as avg_pop, 
+    avg(he.health_exp) as avg_health 
+  from rural_pop rp
+  join health_exp he 
+    on he.region_code = rp.region_code 
+    and he.year = rp.year
+  where rp.year between 2000 and 2014
+) x 
+where rp.year between 2000 and 2014
+) y
+) z</code></pre>
       </div>
     </div>
 
@@ -545,8 +614,13 @@ and year between 2005 and 2016</code></pre>
       </div>
       <div id="collapseI3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
-mean( gdp$gdp_pcap[ set ] )</code></pre>
+new = merge( health[ ,c("region_name","year","health_exp") ], 
+             pop[ ,c("region_name","year","rural_pop") ], 
+             by = c("region_name", "year") 
+)
+new = new[new$year >= 2000 & new$year <= 2014, ]                           # only certain years
+new = new[ is.na(new$health_exp)==FALSE & is.na(new$rural_pop)==FALSE, ]   # only full records
+cor(new$rural_pop, new$health_exp)</code></pre>
       </div>
     </div>
 
