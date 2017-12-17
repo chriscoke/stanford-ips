@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="prism.css">
+<link rel="stylesheet" href="extra_style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="prism.js"></script>
@@ -18,75 +19,543 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="home.html">Data Analysis Curriculum</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="setup.html">Getting Set Up</a></li>
+            <li><a href="resources.html">Other Resources</a></li>
+            <li><a href="about.html">About</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
+                <li><a href="q1.html">1: Data Manipulation</a></li>
+                <li><a href="#">2: Visualization</a></li>
+                <li><a href="#">3: Data Structures</a></li>
               </ul>
             </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">Default</a></li>
-            <li><a href="../navbar-static-top/">Static top</a></li>
-            <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
+<div id="topspace"><br><br><br><br></div>
+
 <div class="container">
 	<h1> Question 1 </h1>
 	<h3> Math and Statistics Calculations </h3>
 </div>
+
 <br>
-<div class="container"> <a href="home.html">return to home page</a></div>
-<br><br>
-<div class="container"> 
-	A: What is the average annual GDP per Capita of Argentina from 2005 through 2016? <br><br>
-	<i>hint: use AVERAGE</i>
-</div>
-<br><br><br><br>
-<div class="container"> 
-	B: What is the maximum % of Public Expenditure on health for any recorded year in Chile? <br><br>
-	<i>hint: use MAX</i>
-</div>
-<br><br>
+<div class="container"> <a href="q1_answers.xlsx">download Q1 answer sheet</a></div>
+<br>
+
+<!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<div class="container"><p class="q"> A: What is the average annual GDP per capita of Argentina from 2005 through 2016?</p></div>
+
+<br>
 
 <div class="container">
-  <h2>Collapsible List Group</h2>
-  <p>Click on the collapsible panel to open and close it.</p>
+  <p><i>Solutions (click to expand)</i></p>
   <div class="panel-group">
+    
+    <!-- Excel -->
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" href="#collapse1">Collapsible list group</a>
-        </h4>
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA1">Excel</a></h4>
       </div>
-      <div id="collapse1" class="panel-collapse collapse">
-		<pre><code class="language-css">p { color: red }</code></pre>
-	  </div>
+      <div id="collapseA1" class="panel-collapse collapse">
+		    <pre><code class="language-javascript">
+=AVERAGE(GDP.PCAP!AZ9:BK9)</code></pre>
+	    </div>
     </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA2">SQL</a></h4>
+      </div>
+      <div id="collapseA2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select avg(gdp_pcap)
+from gdp_pcap
+where region_name = 'Argentina'
+and year between 2005 and 2016</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA3">R</a></h4>
+      </div>
+      <div id="collapseA3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
+mean( gdp$gdp_pcap[ set ] )</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- PART B ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+<div class="container"><p class="q"> B: What is the maximum % of Public Expenditure on health for any recorded year in Chile? </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB1">Excel</a></h4>
+      </div>
+      <div id="collapseB1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+=AVERAGE(GDP.PCAP!AZ9:BK9)</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB2">SQL</a></h4>
+      </div>
+      <div id="collapseB2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select avg(gdp_pcap)
+from gdp_pcap
+where region_name = 'Argentina'
+and year between 2005 and 2016</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB3">R</a></h4>
+      </div>
+      <div id="collapseB3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
+mean( gdp$gdp_pcap[ set ] )</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- PART C ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+<div class="container"><p class="q"> C: What would you expect a transatlantic, working, married couple from Canada and Belgium to be earning annually in 2016? </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseC1">Excel</a></h4>
+      </div>
+      <div id="collapseC1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+=AVERAGE(GDP.PCAP!AZ9:BK9)</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseC2">SQL</a></h4>
+      </div>
+      <div id="collapseC2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select avg(gdp_pcap)
+from gdp_pcap
+where region_name = 'Argentina'
+and year between 2005 and 2016</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseC3">R</a></h4>
+      </div>
+      <div id="collapseC3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
+mean( gdp$gdp_pcap[ set ] )</code></pre>
+      </div>
+    </div>
+
   </div>
 </div>
+
+<!-- PART D ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     
+<div class="container"><p class="q"> D: What is the median rural population among all countries in the world in 2010 vs. 2016? </p></div>
+
+<br>
+
 <div class="container">
-	<br><br><br><br><br><br><br><br><br><br><br>
-	<h1>spacing</h1>
-	<br><br><br><br><br><br><br><br><br><br><br>
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseD1">Excel</a></h4>
+      </div>
+      <div id="collapseD1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+=AVERAGE(GDP.PCAP!AZ9:BK9)</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseD2">SQL</a></h4>
+      </div>
+      <div id="collapseD2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select avg(gdp_pcap)
+from gdp_pcap
+where region_name = 'Argentina'
+and year between 2005 and 2016</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseD3">R</a></h4>
+      </div>
+      <div id="collapseD3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
+mean( gdp$gdp_pcap[ set ] )</code></pre>
+      </div>
+    </div>
+
+  </div>
 </div>
+
+  <!-- PART E1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+<div class="container"><p class="q"> E1: What is the average % of Public Expenditure on health in 2015? </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseE11">Excel</a></h4>
+      </div>
+      <div id="collapseE11" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+=AVERAGE(GDP.PCAP!AZ9:BK9)</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseE12">SQL</a></h4>
+      </div>
+      <div id="collapseE12" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select avg(gdp_pcap)
+from gdp_pcap
+where region_name = 'Argentina'
+and year between 2005 and 2016</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseE13">R</a></h4>
+      </div>
+      <div id="collapseE13" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
+mean( gdp$gdp_pcap[ set ] )</code></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  <!-- PART E2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+<div class="container"><p class="q"> E2: What is the average % of Public Expenditure on health in 2015, weighted by Rural Population in the same year? </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseE21">Excel</a></h4>
+      </div>
+      <div id="collapseE21" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+=AVERAGE(GDP.PCAP!AZ9:BK9)</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseE22">SQL</a></h4>
+      </div>
+      <div id="collapseE22" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select avg(gdp_pcap)
+from gdp_pcap
+where region_name = 'Argentina'
+and year between 2005 and 2016</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseE23">R</a></h4>
+      </div>
+      <div id="collapseE23" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
+mean( gdp$gdp_pcap[ set ] )</code></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  <!-- PART F ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+<div class="container"><p class="q"> F: What was the standard deviation of % health expenditure among all countries and regions in 2014? </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseF1">Excel</a></h4>
+      </div>
+      <div id="collapseF1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+=AVERAGE(GDP.PCAP!AZ9:BK9)</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseF2">SQL</a></h4>
+      </div>
+      <div id="collapseF2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select avg(gdp_pcap)
+from gdp_pcap
+where region_name = 'Argentina'
+and year between 2005 and 2016</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseF3">R</a></h4>
+      </div>
+      <div id="collapseF3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
+mean( gdp$gdp_pcap[ set ] )</code></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  <!-- PART G ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+<div class="container"><p class="q"> G: What is the 25th, 50th, and 75th percentiles of % health expenditure among all countries and regions in 2014? </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseG1">Excel</a></h4>
+      </div>
+      <div id="collapseG1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+=AVERAGE(GDP.PCAP!AZ9:BK9)</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseG2">SQL</a></h4>
+      </div>
+      <div id="collapseG2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select avg(gdp_pcap)
+from gdp_pcap
+where region_name = 'Argentina'
+and year between 2005 and 2016</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseG3">R</a></h4>
+      </div>
+      <div id="collapseG3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
+mean( gdp$gdp_pcap[ set ] )</code></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  <!-- PART H ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+<div class="container"><p class="q"> H: What is the correlation between Rural Population and % spent on healthcare in the following countries for 2000-2014? </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseH1">Excel</a></h4>
+      </div>
+      <div id="collapseH1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+=AVERAGE(GDP.PCAP!AZ9:BK9)</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseH2">SQL</a></h4>
+      </div>
+      <div id="collapseH2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select avg(gdp_pcap)
+from gdp_pcap
+where region_name = 'Argentina'
+and year between 2005 and 2016</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseH3">R</a></h4>
+      </div>
+      <div id="collapseH3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
+mean( gdp$gdp_pcap[ set ] )</code></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  <!-- PART I ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+<div class="container"><p class="q"> I: What is the correlation between Rural Population and % spent on healthcare over all countries for 2000-2014? </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseI1">Excel</a></h4>
+      </div>
+      <div id="collapseI1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+=AVERAGE(GDP.PCAP!AZ9:BK9)</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseI2">SQL</a></h4>
+      </div>
+      <div id="collapseI2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select avg(gdp_pcap)
+from gdp_pcap
+where region_name = 'Argentina'
+and year between 2005 and 2016</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseI3">R</a></h4>
+      </div>
+      <div id="collapseI3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
+mean( gdp$gdp_pcap[ set ] )</code></pre>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="container"> <a href="#topspace">return to top</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download Q1 answer sheet</a></div>
+<br><br><br><br>
 
 </body>
 </html>
