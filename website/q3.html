@@ -1,0 +1,268 @@
+<html>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="prism.css">
+<link rel="stylesheet" href="extra_style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="prism.js"></script>
+
+<body>
+
+<!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="home.html">Data Analysis Curriculum</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="setup.html">Getting Set Up</a></li>
+            <li><a href="resources.html">Other Resources</a></li>
+            <li><a href="about.html">About</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="q1.html">1: Data Manipulation</a></li>
+                <li><a href="#">2: Visualization</a></li>
+                <li><a href="#">3: Data Structures</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+<div id="topspace"><br><br><br><br></div>
+
+<div class="container">
+	<h1> Question 3 </h1>
+	<h3> Conditional Selections </h3>
+</div>
+
+<br>
+<div class="container"> <a href="q1_answers.xlsx">download Q3 answer sheet</a></div>
+<br>
+
+<!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<div class="container"><p class="q"> A: What is the rural population in 2016 for the following countries? <br> Argentina, Vietnam, China, United States, South Africa, Bangladesh</p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA1">Excel</a></h4>
+      </div>
+      <div id="collapseA1" class="panel-collapse collapse">
+		    <pre><code class="language-javascript">
+=VLOOKUP(B6,RUR.POP!A:BJ,62,FALSE) // where your country name is in cell B6
+// Repeat for each country. See the answer sheet for more detail
+// The VLOOKUP function is powerful.  For a tutorial, try here: http://www.excelfunctions.net/Excel-Vlookup-Tutorial.html</code></pre>
+	    </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA2">SQL</a></h4>
+      </div>
+      <div id="collapseA2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select region_name, rural_pop
+from rural_pop
+where region_name in (
+'Argentina',
+'Vietnam',
+'China',
+'United States',
+'South Africa',
+'Bangladesh')
+and year = 2016</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA3">R</a></h4>
+      </div>
+      <div id="collapseA3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+
+// in one line 
+
+pop$rural_pop[ pop$year == 2016 & pop$region_name %in% c('Argentina', 'Vietnam', 'China', 'United States', 'South Africa', 'Bangladesh') ]
+
+// or, breaking it out
+// a big advantage of R (and any programming language) is that you can execute lines of code step by step, not all at once
+// sometimes this just makes things look cleaner and easier to read
+// here, you can first set the rows pertaining to the years and regions of interest, and call it by the variable "criteria"
+// then you can show the associated rows of the "pop" (population) table
+
+criteria = pop$year == 2016 & pop$region_name %in% c('Argentina', 'Vietnam', 'China', 'United States', 'South Africa', 'Bangladesh')
+pop[criteria, c("region_name","rural_pop")]</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- PART B ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+<div class="container"><p class="q"> 
+  B: What is the GDP per capita and Health Expenditure % in Iraq for the following years? 
+  <br> 1999-2010 
+  <br> <a href=https://www.cia.gov/library/reports/general-reports-1/iraq_wmd_2004/chap2_annxD.html>Read here for why some data is missing</a>
+  </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB1">Excel</a></h4>
+      </div>
+      <div id="collapseB1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+=HLOOKUP(B17,GDP.PCAP!$G$1:$BK$265,113,FALSE) // GDP per capita, if the year is in cell B17
+=HLOOKUP(B17,HEALTH!F:BJ,113,FALSE) // Health Expenditure %, if the year is in cell B17
+// same formulas for all years, as always dragging the fomulas into new cells
+</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB2">SQL</a></h4>
+      </div>
+      <div id="collapseB2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select he.year, he.health_exp, gdp.gdp_pcap
+from health_exp he
+join gdp_pcap gdp 
+  on gdp.region_code = he.region_code 
+  and gdp.year = he.year
+where he.region_name = 'Iraq' and he.year between 1999 and 2010</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB3">R</a></h4>
+      </div>
+      <div id="collapseB3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+new = merge(health, pop[,c("region_code","year","rural_pop")], by=c("region_code", "year"))
+new = new[new$region_name == 'Iraq' & between(new$year,1999,2010), ]
+new[,c("region_name","year","health_exp","rural_pop")]</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- PART C ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    
+<div class="container"><p class="q"> 
+  B: What are the GDPs per capita for the following countries and years? (fill out the table)
+  <br> Argentina, Vietnam, China, United States, South Africa, Bangladesh. 2010-2016
+  </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseC1">Excel</a></h4>
+      </div>
+      <div id="collapseC1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+=HLOOKUP(C$35,GDP.PCAP!$G$1:$BK$265,VLOOKUP($B36,GDP.PCAP!$A:$B,2,FALSE)+1,FALSE)
+// this requires the country name to be in cell B36 and the year to be in cell C35
+// note the way the dollar signs ($) are used to anchor certain rows and columns, which is very useful for dragging
+// see the answer sheet for more detail
+
+</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseC2">SQL</a></h4>
+      </div>
+      <div id="collapseC2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select 
+  region_name, 
+  max(case when year = '2010' then gdp_pcap end) as gdp_pcap_2010,
+  max(case when year = '2011' then gdp_pcap end) as gdp_pcap_2011,
+  max(case when year = '2012' then gdp_pcap end) as gdp_pcap_2012,
+  max(case when year = '2013' then gdp_pcap end) as gdp_pcap_2013,
+  max(case when year = '2014' then gdp_pcap end) as gdp_pcap_2014,
+  max(case when year = '2015' then gdp_pcap end) as gdp_pcap_2015,
+  max(case when year = '2016' then gdp_pcap end) as gdp_pcap_2016
+from gdp_pcap
+where region_name in (
+'Argentina',
+'Vietnam',
+'China',
+'United States',
+'South Africa',
+'Bangladesh')
+and year between 2010 and 2016
+group by region_name</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseC3">R</a></h4>
+      </div>
+      <div id="collapseC3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+library(reshape2)
+
+criteria = between(gdp$year, 2010, 2016) & gdp$region_name %in% c('Argentina','Vietnam','China','United States','South Africa','Bangladesh')
+temp = gdp[criteria, ]
+temp = dcast(temp, region_name ~ year, value.var="gdp_pcap")
+temp</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="container"> <a href="#topspace">return to top</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download Q3 answer sheet</a></div>
+<br><br><br><br>
+
+</body>
+</html>
