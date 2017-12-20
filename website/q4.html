@@ -1,0 +1,129 @@
+<html>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="prism.css">
+<link rel="stylesheet" href="extra_style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="prism.js"></script>
+
+<body>
+
+<!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="home.html">Data Analysis Curriculum</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="setup.html">Getting Set Up</a></li>
+            <li><a href="resources.html">Other Resources</a></li>
+            <li><a href="about.html">About</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="q1.html">1: Data Manipulation</a></li>
+                <li><a href="#">2: Visualization</a></li>
+                <li><a href="#">3: Data Structures</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+<div id="topspace"><br><br><br><br></div>
+
+<div class="container">
+	<h1> Question 4 </h1>
+	<h3> Transposing Data </h3>
+</div>
+
+<br>
+<div class="container"> <a href="q1_answers.xlsx">download Q4 answer sheet</a></div>
+<br>
+
+<!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<div class="container"><p class="q"> A: Produce a table of GDP per capita for the following years and countries.  Years should be along the y-axis (down the side) and countries across the x-axis (across the top) 
+<br> Countries: Argentina, Bangladesh, United States, Ethiopia, Turkey, Germany
+<br> Years: 1968 to 1985 </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA1">Excel</a></h4>
+      </div>
+      <div id="collapseA1" class="panel-collapse collapse">
+		    <pre><code class="language-javascript">
+// It's best just to review the answer sheet for this one
+// Method 1: Transpose Copy + Paste, then delete unnecessary rows
+// Method 2: Transpose function, then delete unnecessary rows
+// Method 3: HLOOKUP with MATCH 
+// Method 4: Pivot Table </code></pre>
+	    </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA2">SQL</a></h4>
+      </div>
+      <div id="collapseA2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select 
+  year,
+  max(case when region_name = 'Argentina' then gdp_pcap end) as argentina_gdp,
+  max(case when region_name = 'Bangladesh' then gdp_pcap end) as banglaehsh_gdp,
+  max(case when region_name = 'United States' then gdp_pcap end) as usa_gdp,
+  max(case when region_name = 'Ethiopia' then gdp_pcap end) as ethiopia_gdp,
+  max(case when region_name = 'Turkey' then gdp_pcap end) as turkey_gdp,
+  max(case when region_name = 'Germany' then gdp_pcap end) as germany_gdp 
+from gdp_pcap
+where region_name in (
+  'Argentina','Bangladesh','United States','Ethiopia','Turkey','Germany')
+and year between 1968 and 1985
+group by year</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA3">R</a></h4>
+      </div>
+      <div id="collapseA3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+criteria = between(gdp$year, 1968, 1985) & gdp$region_name %in% c('Argentina','Bangladesh','United States','Ethiopia','Turkey','Germany')
+temp = gdp[criteria, ]
+temp = dcast(temp, year ~ region_name, value.var="gdp_pcap")
+temp</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BOTTOM OF PAGE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<div class="container"> <a href="#topspace">return to top</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download Q3 answer sheet</a></div>
+<br><br><br><br>
+
+</body>
+</html>

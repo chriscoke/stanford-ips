@@ -1,0 +1,315 @@
+<html>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="prism.css">
+<link rel="stylesheet" href="extra_style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="prism.js"></script>
+
+<body>
+
+<!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="home.html">Data Analysis Curriculum</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="setup.html">Getting Set Up</a></li>
+            <li><a href="resources.html">Other Resources</a></li>
+            <li><a href="about.html">About</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="q1.html">1: Data Manipulation</a></li>
+                <li><a href="#">2: Visualization</a></li>
+                <li><a href="#">3: Data Structures</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+<div id="topspace"><br><br><br><br></div>
+
+<div class="container">
+	<h1> Question 5 </h1>
+	<h3> Aggregating </h3>
+</div>
+
+<br>
+<div class="container"> <a href="q1_answers.xlsx">download Q4 answer sheet</a></div>
+<br>
+
+<!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<div class="container"><p class="q"> A: What is the average Rural Population in 2016 for each region type, Countries and Regions?</p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA1">Excel</a></h4>
+      </div>
+      <div id="collapseA1" class="panel-collapse collapse">
+		    <pre><code class="language-javascript">
+=AVERAGEIFS(RUR.POP!BJ:BJ,RUR.POP!B:B,'Q5'!C6) // Countries, if "C" is in cell C6
+=AVERAGEIFS(RUR.POP!BJ:BJ,RUR.POP!B:B,'Q5'!C7) // Regions, if "R" is in cell C7</code></pre>
+	    </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA2">SQL</a></h4>
+      </div>
+      <div id="collapseA2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select region_type, avg(rural_pop)
+from rural_pop
+where year = 2016
+group by region_type</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA3">R</a></h4>
+      </div>
+      <div id="collapseA3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+pop[pop$year==2016,] %>% group_by(region_type) %>% summarize(avg_pop = mean(rural_pop, na.rm=T))</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- PART B ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<div class="container"><p class="q"> B: What is the total Rural Population in 2016 for all countries starting with 'T'?</p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB1">Excel</a></h4>
+      </div>
+      <div id="collapseB1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+// First, on the RUR.POP page, create a new column that is the first letter of the country, using this formula
+=LEFT(A2,1) 
+
+// Then, in another cell, use this formula to take the sum of 2016 population (column BJ) where countries start with T (column BL), and the region type is a country denoted "C" (column B)
+=SUMIFS(RUR.POP!BJ:BJ,RUR.POP!BL:BL,"T",RUR.POP!B:B,"C")</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB2">SQL</a></h4>
+      </div>
+      <div id="collapseB2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select sum(rural_pop)
+from rural_pop
+where substring(region_name,1,1) = 'T'
+and year = 2016
+and region_type = 'C'</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB3">R</a></h4>
+      </div>
+      <div id="collapseB3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+sum( pop$rural_pop[ substring(pop$region_name, 1, 1)=="T" & pop$year==2016 ] )</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- PART C ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<div class="container"><p class="q"> C: What is the avg Rural Population in the period 2010-2016 for the following countries? <br> Madagascar, Fiji, Nigeria, Papa New Guinea, Korea, Philippines, Nicaragua</p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseC1">Excel</a></h4>
+      </div>
+      <div id="collapseC1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+// First, do it without normalizing the data
+// the annoying thing here is, you have to manually find the correct row (e.g. 151 for Madagascar, 76 for Fiji)
+=AVERAGE(RUR.POP!BD151:BJ151)
+
+// Second, try it again after normalizing the data
+// Now, you can do it formulaically by referencing the country name in the formula
+
+// Third, try again in one more method: using a formulaic approach, but not normalizing the data
+
+// step 1: retrieve the total rural population for each country and year
+// if the country name is in cell B38, this returns the 2010 population
+=SUMIFS(RUR.POP!BD:BD,RUR.POP!$A:$A,$B38) 
+
+//step 2: average over all of the returned populations
+// if each of the years' population totals are in cells C38 to I38 for 2010 to 2016.
+=AVERAGE(C38:I38) </code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseC2">SQL</a></h4>
+      </div>
+      <div id="collapseC2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select region_name, avg(rural_pop)
+from rural_pop
+where year between 2010 and 2016
+and region_name in (
+  'Madagascar',
+  'Fiji',
+  'Nigeria',
+  'Papua New Guinea',
+  'Korea, Rep.',
+  'Philippines',
+  'Nicaragua')
+group by region_name</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseC3">R</a></h4>
+      </div>
+      <div id="collapseC3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+criteria = between(pop$year, 2010, 2016) & 
+  pop$region_name %in% c('Madagascar', 'Fiji', 'Nigeria', 'Papua New Guinea', 'Korea, Rep.', 'Philippines', 'Nicaragua')
+pop[criteria, ] %>% group_by(region_name) %>% summarize(avg_pop = mean(rural_pop))</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- PART D ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<div class="container"><p class="q"> D: What is the average of the sums of 2016 Rural populations for each of the following groups? 
+<br> Group 1: Nicaragua, Madagascar
+<br> Group 2: Fiji, Nigeria, Philippines </p></div>
+
+<br>
+
+<div class="container">
+  <p><i>Solutions (click to expand)</i></p>
+  <div class="panel-group">
+    
+    <!-- Excel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseD1">Excel</a></h4>
+      </div>
+      <div id="collapseD1" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+// First, get the 2016 rural population for each individual country, like this
+// The country name must be in cell B49
+=VLOOKUP(B49,$B$38:$J$44,8,FALSE)
+
+// Second, take the sum of the rural populations for each group, like this
+// The results from the vlookup above would have to be in cells C48-C50 for group 1 and C54-C56 for group 2
+=SUM(C48:C50) // Group 1
+=SUM(C54:C56) // Group 2
+
+// Finally, take the average of the results from step 2
+=AVERAGE(C57,C51)</code></pre>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseD2">SQL</a></h4>
+      </div>
+      <div id="collapseD2" class="panel-collapse collapse">
+        <pre><code class="language-javascript">
+select (grp1 + grp2)/2 as average
+from (
+  select 
+  sum(case when region_name in ('Nicaragua','Madagascar') then rural_pop end) as grp1,
+  sum(case when region_name in ('Philippines','Fiji','Nigeria') then rural_pop end) as grp2
+  from rural_pop
+  where year = 2016
+) x</code></pre>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseD3">R</a></h4>
+      </div>
+      <div id="collapseD3" class="panel-collapse collapse">
+        <pre><code class="language-javascript"> 
+group1 = c('Nicaragua','Madagascar')
+group2 = c('Philippines','Fiji','Nigeria')
+mean( 
+  sum(pop$rural_pop[pop$year==2016 & pop$region_name %in% group1]),  
+  sum(pop$rural_pop[pop$year==2016 & pop$region_name %in% group2]) 
+)</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- BOTTOM OF PAGE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<div class="container"> <a href="#topspace">return to top</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download Q3 answer sheet</a></div>
+<br><br><br><br>
+
+</body>
+</html>
