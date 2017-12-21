@@ -30,7 +30,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="q1.html">1: Data Manipulation</a></li>
+                <li><a href="module1_home.html">1: Data Manipulation</a></li>
                 <li><a href="#">2: Visualization</a></li>
                 <li><a href="#">3: Data Structures</a></li>
               </ul>
@@ -47,8 +47,12 @@
 	<h3> Math and Statistics Calculations </h3>
 </div>
 
+<div class="container">
+  <p> The purpose of this question is to demonstrate these programs' utility as calculators.  All scientific programming languages -- e.g. MATLAB, python, and many others -- are going to have these functionalities built in.  From as simple as <i>1 + 1 = 2</i> to as challenging as a <i>correlation</i> formula.  Each program has its own syntax, and this is a great place to start to unfold it and learn it. At the end of this question, you should have a general sense of what operations are easy, and which are challenging, across Microsoft's Excel, R, and Oracle's MySQL.</p>  
+</div>
+
 <br>
-<div class="container"> <a href="q1_answers.xlsx">download Q1 answer sheet</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
 <br>
 
 <!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -68,7 +72,14 @@
       </div>
       <div id="collapseA1" class="panel-collapse collapse">
 		    <pre><code class="language-javascript">
-=AVERAGE(GDP.PCAP!AZ9:BK9)</code></pre>
+// Use the average formula over your cells of interest
+
+=AVERAGE(GDP.PCAP!AZ9:BK9)
+
+// Remember that all functions have some default error-handling. This is how the function accounts for bad inputs
+// In Excel, run the following to see
+=AVERAGE("not a number") 
+        </code></pre>
 	    </div>
     </div>
 
@@ -79,10 +90,18 @@
       </div>
       <div id="collapseA2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
+// MySQL also has an average function
+
 select avg(gdp_pcap)
 from gdp_pcap
 where region_name = 'Argentina'
-and year between 2005 and 2016</code></pre>
+and year between 2005 and 2016
+
+// Error handling for avg in SQL:
+select gdp_pcap from gdp_pcap where region_name = 'Argentina' and year = 1961 // this is a 'NULL' value
+select avg(gdp_pcap) from gdp_pcap where region_name = 'Argentina' and year = 1961 // try to take the avg of a NULL
+
+        </code></pre>
       </div>
     </div>
 
@@ -93,8 +112,18 @@ and year between 2005 and 2016</code></pre>
       </div>
       <div id="collapseA3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
+// In R, this is the 'mean' function
+
 set = gdp$region_name == 'Argentina' & gdp$year >= 2005 & gdp$year <= 2016
-mean( gdp$gdp_pcap[ set ] )</code></pre>
+mean( gdp$gdp_pcap[ set ] )
+
+// Error handling for mean in R
+// Remember, you can always google about a function to learn how it handles errors. In Rstudio, you can also type ?[function]
+test = c(4,8,NA,12)
+mean(test)
+mean(test, na.rm=T) // specify how to handle NAs. Aside: what's the difference between NULL and NA in R?
+
+        </code></pre>
       </div>
     </div>
 
@@ -119,7 +148,8 @@ mean( gdp$gdp_pcap[ set ] )</code></pre>
       </div>
       <div id="collapseB1" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-=MAX(HEALTH!F39:BH39)</code></pre>
+=MAX(HEALTH!F39:BH39)
+        </code></pre>
       </div>
     </div>
 
@@ -132,7 +162,8 @@ mean( gdp$gdp_pcap[ set ] )</code></pre>
         <pre><code class="language-javascript">
 select max(health_exp)
 from health_exp
-where region_name = 'Chile'</code></pre>
+where region_name = 'Chile'
+        </code></pre>
       </div>
     </div>
 
@@ -143,7 +174,10 @@ where region_name = 'Chile'</code></pre>
       </div>
       <div id="collapseB3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-max( health$health_exp[ health$region_name=='Chile' ], na.rm=T )</code></pre>
+// Note the required error-handling of NAs
+
+max( health$health_exp[ health$region_name=='Chile' ], na.rm=T )
+        </code></pre>
       </div>
     </div>
 
@@ -168,7 +202,10 @@ max( health$health_exp[ health$region_name=='Chile' ], na.rm=T )</code></pre>
       </div>
       <div id="collapseC1" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-=SUM(GDP.PCAP!BK35,GDP.PCAP!BK17)</code></pre>
+// An 'expectation' is the average. This is asking for the sum of their average salaries, and the GDP per Capita IS the average salary for someone in that country
+// I bet as a couple they make really good poutine
+=SUM(GDP.PCAP!BK35,GDP.PCAP!BK17)
+        </code></pre>
       </div>
     </div>
 
@@ -182,7 +219,8 @@ max( health$health_exp[ health$region_name=='Chile' ], na.rm=T )</code></pre>
 select sum(gdp_pcap)
 from gdp_pcap
 where region_name in ('Belgium','Canada')
-and year = 2016</code></pre>
+and year = 2016
+        </code></pre>
       </div>
     </div>
 
@@ -193,7 +231,8 @@ and year = 2016</code></pre>
       </div>
       <div id="collapseC3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-sum( gdp$gdp_pcap[ gdp$year == 2016 & gdp$region_name %in% c('Belgium', 'Canada') ] )</code></pre>
+sum( gdp$gdp_pcap[ gdp$year == 2016 & gdp$region_name %in% c('Belgium', 'Canada') ] )
+        </code></pre>
       </div>
     </div>
 
@@ -219,7 +258,7 @@ sum( gdp$gdp_pcap[ gdp$year == 2016 & gdp$region_name %in% c('Belgium', 'Canada'
         <pre><code class="language-javascript">
 =MEDIAN(RUR.POP!BD2:BD265) // 2010
 =MEDIAN(RUR.POP!BJ2:BJ265) // 2016
-</code></pre>
+        </code></pre>
       </div>
     </div>
 
@@ -230,7 +269,9 @@ sum( gdp$gdp_pcap[ gdp$year == 2016 & gdp$region_name %in% c('Belgium', 'Canada'
       </div>
       <div id="collapseD2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-// Median is not easy with SQL...</code></pre>
+// Median is not easy with SQL...
+// You can read more and find a way to do this here: [link] 
+        </code></pre>
       </div>
     </div>
 
@@ -241,9 +282,12 @@ sum( gdp$gdp_pcap[ gdp$year == 2016 & gdp$region_name %in% c('Belgium', 'Canada'
       </div>
       <div id="collapseD3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
+// Median is, however, an available function in R
+
 v1 = median( pop$rural_pop[ pop$year==2010 ], na.rm=T )
 v2 = median( pop$rural_pop[ pop$year==2016 ], na.rm=T )
-c(v1, v2)</code></pre>
+c(v1, v2)
+        </code></pre>
       </div>
     </div>
 
@@ -267,7 +311,10 @@ c(v1, v2)</code></pre>
       </div>
       <div id="collapseE11" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-=AVERAGE(HEALTH!BH2:BH265)</code></pre>
+// Same calculation as before, just introducing a new dataset
+
+=AVERAGE(HEALTH!BH2:BH265)
+        </code></pre>
       </div>
     </div>
 
@@ -280,7 +327,8 @@ c(v1, v2)</code></pre>
         <pre><code class="language-javascript">
 select avg(health_exp)
 from health_exp
-where year = 2014</code></pre>
+where year = 2014
+        </code></pre>
       </div>
     </div>
 
@@ -291,7 +339,8 @@ where year = 2014</code></pre>
       </div>
       <div id="collapseE13" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-mean( health$health_exp[ health$year==2014 ], na.rm=T )</code></pre>
+mean( health$health_exp[ health$year==2014 ], na.rm=T )
+        </code></pre>
       </div>
     </div>
 
@@ -315,7 +364,12 @@ mean( health$health_exp[ health$year==2014 ], na.rm=T )</code></pre>
       </div>
       <div id="collapseE21" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-=SUMPRODUCT(HEALTH!BH2:BH265,RUR.POP!BH2:BH265)/SUM(RUR.POP!BH2:BH265)</code></pre>
+// A weighted average can be accomplished with the SUMPRODUCT function
+// this multiplies the 1st and 2nd arguments you pass to it, and then takes their sum
+// generically: sum(value * weights) / sum(value) 
+
+=SUMPRODUCT(HEALTH!BH2:BH265,RUR.POP!BH2:BH265)/SUM(RUR.POP!BH2:BH265)
+        </code></pre>
       </div>
     </div>
 
@@ -326,12 +380,16 @@ mean( health$health_exp[ health$year==2014 ], na.rm=T )</code></pre>
       </div>
       <div id="collapseE22" class="panel-collapse collapse">
         <pre><code class="language-javascript">
+// SQL doesn't have an explicit sum-product function, but it's trivial to take then sum of the product
+// if this is your first time joining, make sure you understand what's going on by taking a SQL tutorial
+
 select sum(rp.rural_pop * he.health_exp)/sum(rp.rural_pop)
 from rural_pop rp
 join health_exp he 
   on he.region_code = rp.region_code 
   and he.year = rp.year
-where rp.year = 2014</code></pre>
+where rp.year = 2014
+        </code></pre>
       </div>
     </div>
 
@@ -342,22 +400,27 @@ where rp.year = 2014</code></pre>
       </div>
       <div id="collapseE23" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
+
+// Again, just taking utilizing the same formula: sum(value * weights) / sum(value) 
+
 sum(health$health_exp[health$year==2014] * pop$rural_pop[pop$year==2014], na.rm=T ) / 
   sum( pop$rural_pop[pop$year==2014], na.rm=T ) 
 
-// above only works if the tables health and pop have all countries in the same order. In case they don't:
+// but wait! the above only works if the tables 'health' and 'pop' have all countries in the same order. We shouldn't presume the do:
+
 // first, merge the two tables accordingly
 new = merge(health, pop, by=c("region_code", "year"))
 
-// but wait, many of the columns got duplicated...
+// hmmm, many of the columns got duplicated, that's messy...
 names(new)
 
 // try again, now specifying only the new columns you want from the population table
 new = merge(health, pop[,c("region_code","year","rural_pop")], by=c("region_code", "year"))
 
-// and calculate
+// and calculate the weighted average now
 sum(new$health_exp[new$year==2014] * new$rural_pop[new$year==2014], na.rm=T ) / 
-  sum( new$rural_pop[new$year==2014], na.rm=T ) </code></pre>
+  sum( new$rural_pop[new$year==2014], na.rm=T )
+       </code></pre>
       </div>
     </div>
 
@@ -381,7 +444,10 @@ sum(new$health_exp[new$year==2014] * new$rural_pop[new$year==2014], na.rm=T ) /
       </div>
       <div id="collapseF1" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-=STDEV(HEALTH!BH3:BH265)</code></pre>
+// Simple formula in Excel
+
+=STDEV(HEALTH!BH3:BH265)
+       </code></pre>
       </div>
     </div>
 
@@ -392,9 +458,12 @@ sum(new$health_exp[new$year==2014] * new$rural_pop[new$year==2014], na.rm=T ) /
       </div>
       <div id="collapseF2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
+//Also a simple formula in SQL
+
 select std(health_exp)
 from health_exp
-where year = 2014</code></pre>
+where year = 2014
+        </code></pre>
       </div>
     </div>
 
@@ -405,7 +474,10 @@ where year = 2014</code></pre>
       </div>
       <div id="collapseF3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-sd( health$health_exp[ health$year == 2014 ] , na.rm=T)</code></pre>
+// 3 in a row -- another simple formula in R
+
+sd( health$health_exp[ health$year == 2014 ] , na.rm=T)
+        </code></pre>
       </div>
     </div>
 
@@ -431,7 +503,8 @@ sd( health$health_exp[ health$year == 2014 ] , na.rm=T)</code></pre>
         <pre><code class="language-javascript">
 =PERCENTILE.INC(HEALTH!$BH$3:$BH$265,0.25) // 25th percentile
 =PERCENTILE.INC(HEALTH!$BH$3:$BH$265,0.5)  // 50th percentile (median)
-=PERCENTILE.INC(HEALTH!$BH$3:$BH$265,0.75) // 75th percentile</code></pre>
+=PERCENTILE.INC(HEALTH!$BH$3:$BH$265,0.75) // 75th percentile
+        </code></pre>
       </div>
     </div>
 
@@ -442,7 +515,8 @@ sd( health$health_exp[ health$year == 2014 ] , na.rm=T)</code></pre>
       </div>
       <div id="collapseG2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-// These are just other versions of median, still not easy in SQL...</code></pre>
+// These are just other versions of median, still not easy in SQL...
+        </code></pre>
       </div>
     </div>
 
@@ -453,7 +527,10 @@ sd( health$health_exp[ health$year == 2014 ] , na.rm=T)</code></pre>
       </div>
       <div id="collapseG3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-quantile( health$health_exp[ health$year == 2014 ], p, na.rm=T )</code></pre>
+// Named 'quantile' in R vs. 'percentile' in Excel, but it's the same calculation
+
+quantile( health$health_exp[ health$year == 2014 ], p, na.rm=T )
+        </code></pre>
       </div>
     </div>
 
@@ -479,7 +556,8 @@ quantile( health$health_exp[ health$year == 2014 ], p, na.rm=T )</code></pre>
         <pre><code class="language-javascript">
 =CORREL(HEALTH!AT265:BH265,RUR.POP!AT265:BH265) // Zimbabwe
 =CORREL(HEALTH!AT223:BH223,RUR.POP!AT223:BH223) // Sweden
-=CORREL(HEALTH!AT187:BH187,RUR.POP!AT187:BH187) // Philippines</code></pre>
+=CORREL(HEALTH!AT187:BH187,RUR.POP!AT187:BH187) // Philippines
+        </code></pre>
       </div>
     </div>
 
@@ -490,7 +568,7 @@ quantile( health$health_exp[ health$year == 2014 ], p, na.rm=T )</code></pre>
       </div>
       <div id="collapseH2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-// Not Easy...but here it is. Come back to this later if you'd like.
+// Just like median in SQL, this is not Easy...but here it is. I'd recommend only going through this once you're comfortable with advanced SQL queries.
 // MySQL does not have a correlation function (like it does for average, or standard deviation)
 // Remember, sample correlation coefficient equation: https://wikimedia.org/api/rest_v1/media/math/render/svg/bd1ccc2979b0fd1c1aec96e386f686ae874f9ec0
 
@@ -528,7 +606,8 @@ and rp.year between 2000 and 2014
 order by rp.region_name
 ) y
 group by region_name
-) z</code></pre>
+) z
+      </code></pre>
       </div>
     </div>
 
@@ -538,7 +617,10 @@ group by region_name
         <h4 class="panel-title"><a data-toggle="collapse" href="#collapseH3">R</a></h4>
       </div>
       <div id="collapseH3" class="panel-collapse collapse">
-        <pre><code class="language-javascript"> 
+        <pre><code class="language-javascript">
+
+// Fortuntely, R does have a correlation function
+
 new = merge( health[ ,c("region_name","year","health_exp") ], 
              pop[ ,c("region_name","year","rural_pop") ], 
              by = c("region_name", "year") 
@@ -546,7 +628,8 @@ new = merge( health[ ,c("region_name","year","health_exp") ],
 new = new[new$region_name %in% c('Zimbabwe', 'Sweden', 'Philippines'), ]   # only certain countries 
 new = new[new$year >= 2000 & new$year <= 2014, ]                           # only certain years
 new = new[ is.na(new$health_exp)==FALSE & is.na(new$rural_pop)==FALSE, ]   # only full records
-cor(new$rural_pop, new$health_exp)</code></pre>
+cor(new$rural_pop, new$health_exp)
+        </code></pre>
       </div>
     </div>
 
@@ -570,7 +653,10 @@ cor(new$rural_pop, new$health_exp)</code></pre>
       </div>
       <div id="collapseI1" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-=CORREL(HEALTH!AT2:BH265,RUR.POP!AT2:BH265)</code></pre>
+// Usefully, you can pass multiple vectors (i.e. a string of years for a country and the health expenditure values) into the single function 
+
+=CORREL(HEALTH!AT2:BH265,RUR.POP!AT2:BH265)
+        </code></pre>
       </div>
     </div>
 
@@ -581,7 +667,7 @@ cor(new$rural_pop, new$health_exp)</code></pre>
       </div>
       <div id="collapseI2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-// Similar as above. Need to implement on our own the correlation formula
+// Similar as the last SQL answer. Need to implement on our own the correlation formula
 
 select p1 / (sqrt(p2)*sqrt(p3)) as correl_coef
 from (
@@ -609,7 +695,8 @@ cross join (
 ) x 
 where rp.year between 2000 and 2014
 ) y
-) z</code></pre>
+) z
+        </code></pre>
       </div>
     </div>
 
@@ -620,13 +707,16 @@ where rp.year between 2000 and 2014
       </div>
       <div id="collapseI3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
+// Almost identical to the prior R answer, except removing one line. Do you see it?
+
 new = merge( health[ ,c("region_name","year","health_exp") ], 
              pop[ ,c("region_name","year","rural_pop") ], 
              by = c("region_name", "year") 
 )
 new = new[new$year >= 2000 & new$year <= 2014, ]                           # only certain years
 new = new[ is.na(new$health_exp)==FALSE & is.na(new$rural_pop)==FALSE, ]   # only full records
-cor(new$rural_pop, new$health_exp)</code></pre>
+cor(new$rural_pop, new$health_exp)
+        </code></pre>
       </div>
     </div>
 
@@ -634,7 +724,7 @@ cor(new$rural_pop, new$health_exp)</code></pre>
 </div>
 
 <div class="container"> <a href="#topspace">return to top</a></div>
-<div class="container"> <a href="q1_answers.xlsx">download Q1 answer sheet</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
 <br><br><br><br>
 
 </body>

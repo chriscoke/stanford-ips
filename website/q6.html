@@ -43,12 +43,12 @@
 <div id="topspace"><br><br><br><br></div>
 
 <div class="container">
-	<h1> Question 4 </h1>
-	<h3> Transposing Data </h3>
+	<h1> Question 6 </h1>
+	<h3> Subsetting </h3>
 </div>
 
 <div class="container">
-  <p> The purpose of this question is to show you how transposition works in each program. This was introduced at the end of the last question.  Re-formatting tables for visual reasons is very common, especially because you will likely encounter the raw data in a normalized format, which is good for storing and querying, but not great for viewing and analyzing. </p>  
+  <p> In this question, we get into more complex versions of of conditional calculations. These are referred to "subsetting" questions because generally the problems can be approached with two parts that are sequential rather than simultaneous: first, apply your criteria, then run the calculations. If not already, it is here that you will see that the intermediate steps in Excel are more challening to both complete and document. </p>  
 </div>
 
 <br>
@@ -57,9 +57,7 @@
 
 <!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<div class="container"><p class="q"> A: Produce a table of GDP per capita for the following years and countries.  Years should be along the y-axis (down the side) and countries across the x-axis (across the top) 
-<br> Countries: Argentina, Bangladesh, United States, Ethiopia, Turkey, Germany
-<br> Years: 1968 to 1985 </p></div>
+<div class="container"><p class="q"> A: What were the top 5 largest GDPs per capita in 2000, only among countries with a rural population of at least 20 million in 2016.</p></div>
 
 <br>
 
@@ -74,11 +72,8 @@
       </div>
       <div id="collapseA1" class="panel-collapse collapse">
 		    <pre><code class="language-javascript">
-// It's best just to review the answer sheet for this one
-// Method 1: Transpose Copy + Paste, then delete unnecessary rows
-// Method 2: Transpose function, then delete unnecessary rows
-// Method 3: HLOOKUP with MATCH 
-// Method 4: Pivot Table </code></pre>
+// See answer sheet for details
+        </code></pre>
 	    </div>
     </div>
 
@@ -89,31 +84,40 @@
       </div>
       <div id="collapseA2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-// First, here's what the results look like before transposing
+// You'll need to use a "sub-join" here.
+// Recall that all sub-joins must have a an alias. Here, it is "r"
 
 select 
-  region_name, year, gdp_pcap
-from gdp_pcap
-where region_name in (
-  'Argentina','Bangladesh','United States','Ethiopia','Turkey','Germany')
-and year between 1968 and 1985
-group by year
+  g.region_name,
+  g.gdp_pcap
+from gdp_pcap g
+join (
+  select region_code
+  from rural_pop 
+  where rural_pop >= 20000000
+  and year = 2016
+) r on r.region_code = g.region_code
+where g.region_type = 'C'
+and g.year = 2000
+order by g.gdp_pcap desc
+limit 5
 
-// And now moving the countries to their own columns
+// You might be tempted to go at it purely through where clauses
+// This would be wrong, and it's helpful to review why
+// The query would join region_code.year to gdp_pcap.year. And then restrict this to 2016.
+// So the result of this query is the top 5 GDPs per capita in 2016, not 2010
 
-select 
-  year,
-  max(case when region_name = 'Argentina' then gdp_pcap end) as argentina_gdp,
-  max(case when region_name = 'Bangladesh' then gdp_pcap end) as banglaehsh_gdp,
-  max(case when region_name = 'United States' then gdp_pcap end) as usa_gdp,
-  max(case when region_name = 'Ethiopia' then gdp_pcap end) as ethiopia_gdp,
-  max(case when region_name = 'Turkey' then gdp_pcap end) as turkey_gdp,
-  max(case when region_name = 'Germany' then gdp_pcap end) as germany_gdp 
-from gdp_pcap
-where region_name in (
-  'Argentina','Bangladesh','United States','Ethiopia','Turkey','Germany')
-and year between 1968 and 1985
-group by year
+select g.region_name, g.gdp_pcap
+from gdp_pcap g
+join rural_pop r 
+  on r.region_code = g.region_code
+  and r.year = g.year
+where g.region_type = 'C'
+and r.rural_pop >= 20000000 and r.year = 2016
+order by g.gdp_pcap desc
+limit 5
+
+// Is there a way to revise this to be correct?
         </code></pre>
       </div>
     </div>
@@ -125,12 +129,10 @@ group by year
       </div>
       <div id="collapseA3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-// dcast is the way to go
-
-criteria = between(gdp$year, 1968, 1985) & gdp$region_name %in% c('Argentina','Bangladesh','United States','Ethiopia','Turkey','Germany')
-temp = gdp[criteria, ]
-temp = dcast(temp, year ~ region_name, value.var="gdp_pcap")
-temp
+candidate.regions = pop$region_code[ pop$year==2016 & pop$rural_pop >= 20000000 & pop$region_type == 'C' ]
+tbl = gdp[ gdp$region_code %in% candidate.regions & gdp$year == 2000, ]
+top = order(tbl$gdp_pcap, decreasing = T)[1:5]
+tbl[top, ]
         </code></pre>
       </div>
     </div>
@@ -139,10 +141,11 @@ temp
 
 </div>
 
+
 <!-- BOTTOM OF PAGE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 <div class="container"> <a href="#topspace">return to top</a></div>
-<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download module 1 sheet</a></div>
 <br><br><br><br>
 
 </body>

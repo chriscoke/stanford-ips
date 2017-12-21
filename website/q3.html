@@ -30,7 +30,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="q1.html">1: Data Manipulation</a></li>
+                <li><a href="module1_home.html">1: Data Manipulation</a></li>
                 <li><a href="#">2: Visualization</a></li>
                 <li><a href="#">3: Data Structures</a></li>
               </ul>
@@ -47,8 +47,12 @@
 	<h3> Conditional Selections </h3>
 </div>
 
+<div class="container">
+  <p> The purpose of this question is to implement very simple and common queries: retrieve some value for a specified criteria.  This is trivial for SQL and R, and is mostly to get you accustomed to the syntax.  For Excel, this introduces the 'VLOOKUP' (and 'HLOOKUP') functions, which are crucial.</p>  
+</div>
+
 <br>
-<div class="container"> <a href="q1_answers.xlsx">download Q3 answer sheet</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
 <br>
 
 <!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -68,9 +72,12 @@
       </div>
       <div id="collapseA1" class="panel-collapse collapse">
 		    <pre><code class="language-javascript">
-=VLOOKUP(B6,RUR.POP!A:BJ,62,FALSE) // where your country name is in cell B6
 // Repeat for each country. See the answer sheet for more detail
-// The VLOOKUP function is powerful.  For a tutorial, try here: http://www.excelfunctions.net/Excel-Vlookup-Tutorial.html</code></pre>
+
+=VLOOKUP(B6,RUR.POP!A:BJ,62,FALSE) // where your country name is in cell B6
+
+// The VLOOKUP function is powerful.  For a tutorial, try here: http://www.excelfunctions.net/Excel-Vlookup-Tutorial.html
+        </code></pre>
 	    </div>
     </div>
 
@@ -81,6 +88,8 @@
       </div>
       <div id="collapseA2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
+// Introducing slightly more complex 'where' conditions
+
 select region_name, rural_pop
 from rural_pop
 where region_name in (
@@ -90,7 +99,8 @@ where region_name in (
 'United States',
 'South Africa',
 'Bangladesh')
-and year = 2016</code></pre>
+and year = 2016
+        </code></pre>
       </div>
     </div>
 
@@ -113,7 +123,8 @@ pop$rural_pop[ pop$year == 2016 & pop$region_name %in% c('Argentina', 'Vietnam',
 // then you can show the associated rows of the "pop" (population) table
 
 criteria = pop$year == 2016 & pop$region_name %in% c('Argentina', 'Vietnam', 'China', 'United States', 'South Africa', 'Bangladesh')
-pop[criteria, c("region_name","rural_pop")]</code></pre>
+pop[criteria, c("region_name","rural_pop")]
+        </code></pre>
       </div>
     </div>
 
@@ -142,10 +153,11 @@ pop[criteria, c("region_name","rural_pop")]</code></pre>
       </div>
       <div id="collapseB1" class="panel-collapse collapse">
         <pre><code class="language-javascript">
+// same formulas for all years, as always dragging the fomulas into new cells
+
 =HLOOKUP(B17,GDP.PCAP!$G$1:$BK$265,113,FALSE) // GDP per capita, if the year is in cell B17
 =HLOOKUP(B17,HEALTH!F:BJ,113,FALSE) // Health Expenditure %, if the year is in cell B17
-// same formulas for all years, as always dragging the fomulas into new cells
-</code></pre>
+        </code></pre>
       </div>
     </div>
 
@@ -156,12 +168,15 @@ pop[criteria, c("region_name","rural_pop")]</code></pre>
       </div>
       <div id="collapseB2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
+// Notice the missing data, and follow the link above to laern more
+
 select he.year, he.health_exp, gdp.gdp_pcap
 from health_exp he
 join gdp_pcap gdp 
   on gdp.region_code = he.region_code 
   and gdp.year = he.year
-where he.region_name = 'Iraq' and he.year between 1999 and 2010</code></pre>
+where he.region_name = 'Iraq' and he.year between 1999 and 2010
+        </code></pre>
       </div>
     </div>
 
@@ -174,7 +189,8 @@ where he.region_name = 'Iraq' and he.year between 1999 and 2010</code></pre>
         <pre><code class="language-javascript"> 
 new = merge(health, pop[,c("region_code","year","rural_pop")], by=c("region_code", "year"))
 new = new[new$region_name == 'Iraq' & between(new$year,1999,2010), ]
-new[,c("region_name","year","health_exp","rural_pop")]</code></pre>
+new[,c("region_name","year","health_exp","rural_pop")]
+        </code></pre>
       </div>
     </div>
 
@@ -202,12 +218,12 @@ new[,c("region_name","year","health_exp","rural_pop")]</code></pre>
       </div>
       <div id="collapseC1" class="panel-collapse collapse">
         <pre><code class="language-javascript">
-=HLOOKUP(C$35,GDP.PCAP!$G$1:$BK$265,VLOOKUP($B36,GDP.PCAP!$A:$B,2,FALSE)+1,FALSE)
 // this requires the country name to be in cell B36 and the year to be in cell C35
 // note the way the dollar signs ($) are used to anchor certain rows and columns, which is very useful for dragging
 // see the answer sheet for more detail
 
-</code></pre>
+=HLOOKUP(C$35,GDP.PCAP!$G$1:$BK$265,VLOOKUP($B36,GDP.PCAP!$A:$B,2,FALSE)+1,FALSE)
+        </code></pre>
       </div>
     </div>
 
@@ -218,6 +234,8 @@ new[,c("region_name","year","health_exp","rural_pop")]</code></pre>
       </div>
       <div id="collapseC2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
+// These select statements allow you to essentially transpose the results into a more readable format
+
 select 
   region_name, 
   max(case when year = '2010' then gdp_pcap end) as gdp_pcap_2010,
@@ -236,7 +254,8 @@ where region_name in (
 'South Africa',
 'Bangladesh')
 and year between 2010 and 2016
-group by region_name</code></pre>
+group by region_name
+        </code></pre>
       </div>
     </div>
 
@@ -248,11 +267,15 @@ group by region_name</code></pre>
       <div id="collapseC3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
 library(reshape2)
+// DO I NEED THIS?
+
+// R has a function, 'dcast' which will transpose any table. Much easier than SQL's version of having to write out each column you want to transpose as it's own select statement line
 
 criteria = between(gdp$year, 2010, 2016) & gdp$region_name %in% c('Argentina','Vietnam','China','United States','South Africa','Bangladesh')
 temp = gdp[criteria, ]
 temp = dcast(temp, region_name ~ year, value.var="gdp_pcap")
-temp</code></pre>
+temp
+        </code></pre>
       </div>
     </div>
 
@@ -261,7 +284,7 @@ temp</code></pre>
 </div>
 
 <div class="container"> <a href="#topspace">return to top</a></div>
-<div class="container"> <a href="q1_answers.xlsx">download Q3 answer sheet</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
 <br><br><br><br>
 
 </body>

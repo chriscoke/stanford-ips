@@ -30,7 +30,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="q1.html">1: Data Manipulation</a></li>
+                <li><a href="module1_home.html">1: Data Manipulation</a></li>
                 <li><a href="#">2: Visualization</a></li>
                 <li><a href="#">3: Data Structures</a></li>
               </ul>
@@ -47,8 +47,12 @@
 	<h3> Aggregating </h3>
 </div>
 
+<div class="container">
+  <p> This question goes further into some concepts already introduced.  The nature of all 'aggregations' in this question is (i) some conditional selection, with (ii) some grouped calculation.  You will see that this is bread-and-butter for SQL and R, but requires introducing some new (but very useful) functions in Excel. </p>  
+</div>
+
 <br>
-<div class="container"> <a href="q1_answers.xlsx">download Q4 answer sheet</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
 <br>
 
 <!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -68,8 +72,11 @@
       </div>
       <div id="collapseA1" class="panel-collapse collapse">
 		    <pre><code class="language-javascript">
+// This is in a family of []ifs -- SUM, AVG, COUNT. Note the difference between 'AVERAGEIFS' and 'AVERAGEIF'
+
 =AVERAGEIFS(RUR.POP!BJ:BJ,RUR.POP!B:B,'Q5'!C6) // Countries, if "C" is in cell C6
-=AVERAGEIFS(RUR.POP!BJ:BJ,RUR.POP!B:B,'Q5'!C7) // Regions, if "R" is in cell C7</code></pre>
+=AVERAGEIFS(RUR.POP!BJ:BJ,RUR.POP!B:B,'Q5'!C7) // Regions, if "R" is in cell C7
+        </code></pre>
 	    </div>
     </div>
 
@@ -83,7 +90,8 @@
 select region_type, avg(rural_pop)
 from rural_pop
 where year = 2016
-group by region_type</code></pre>
+group by region_type
+        </code></pre>
       </div>
     </div>
 
@@ -94,7 +102,8 @@ group by region_type</code></pre>
       </div>
       <div id="collapseA3" class="panel-collapse collapse">
         <pre><code class="language-javascript"> 
-pop[pop$year==2016,] %>% group_by(region_type) %>% summarize(avg_pop = mean(rural_pop, na.rm=T))</code></pre>
+pop[pop$year==2016,] %>% group_by(region_type) %>% summarize(avg_pop = mean(rural_pop, na.rm=T))
+        </code></pre>
       </div>
     </div>
 
@@ -123,7 +132,8 @@ pop[pop$year==2016,] %>% group_by(region_type) %>% summarize(avg_pop = mean(rura
 =LEFT(A2,1) 
 
 // Then, in another cell, use this formula to take the sum of 2016 population (column BJ) where countries start with T (column BL), and the region type is a country denoted "C" (column B)
-=SUMIFS(RUR.POP!BJ:BJ,RUR.POP!BL:BL,"T",RUR.POP!B:B,"C")</code></pre>
+=SUMIFS(RUR.POP!BJ:BJ,RUR.POP!BL:BL,"T",RUR.POP!B:B,"C")
+        </code></pre>
       </div>
     </div>
 
@@ -138,7 +148,8 @@ select sum(rural_pop)
 from rural_pop
 where substring(region_name,1,1) = 'T'
 and year = 2016
-and region_type = 'C'</code></pre>
+and region_type = 'C'
+        </code></pre>
       </div>
     </div>
 
@@ -189,7 +200,8 @@ sum( pop$rural_pop[ substring(pop$region_name, 1, 1)=="T" & pop$year==2016 ] )</
 
 //step 2: average over all of the returned populations
 // if each of the years' population totals are in cells C38 to I38 for 2010 to 2016.
-=AVERAGE(C38:I38) </code></pre>
+=AVERAGE(C38:I38) 
+        </code></pre>
       </div>
     </div>
 
@@ -200,6 +212,9 @@ sum( pop$rural_pop[ substring(pop$region_name, 1, 1)=="T" & pop$year==2016 ] )</
       </div>
       <div id="collapseC2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
+
+// Are you starting to see the beauty of SQL and R?
+
 select region_name, avg(rural_pop)
 from rural_pop
 where year between 2010 and 2016
@@ -211,7 +226,8 @@ and region_name in (
   'Korea, Rep.',
   'Philippines',
   'Nicaragua')
-group by region_name</code></pre>
+group by region_name
+        </code></pre>
       </div>
     </div>
 
@@ -224,7 +240,9 @@ group by region_name</code></pre>
         <pre><code class="language-javascript"> 
 criteria = between(pop$year, 2010, 2016) & 
   pop$region_name %in% c('Madagascar', 'Fiji', 'Nigeria', 'Papua New Guinea', 'Korea, Rep.', 'Philippines', 'Nicaragua')
-pop[criteria, ] %>% group_by(region_name) %>% summarize(avg_pop = mean(rural_pop))</code></pre>
+
+pop[criteria, ] %>% group_by(region_name) %>% summarize(avg_pop = mean(rural_pop))
+        </code></pre>
       </div>
     </div>
 
@@ -262,7 +280,8 @@ pop[criteria, ] %>% group_by(region_name) %>% summarize(avg_pop = mean(rural_pop
 =SUM(C54:C56) // Group 2
 
 // Finally, take the average of the results from step 2
-=AVERAGE(C57,C51)</code></pre>
+=AVERAGE(C57,C51)
+        </code></pre>
       </div>
     </div>
 
@@ -273,6 +292,8 @@ pop[criteria, ] %>% group_by(region_name) %>% summarize(avg_pop = mean(rural_pop
       </div>
       <div id="collapseD2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
+// Don't forget to give your temporary table ( everything in the from() ) an alias (here, 'x')
+
 select (grp1 + grp2)/2 as average
 from (
   select 
@@ -280,7 +301,8 @@ from (
   sum(case when region_name in ('Philippines','Fiji','Nigeria') then rural_pop end) as grp2
   from rural_pop
   where year = 2016
-) x</code></pre>
+) x
+        </code></pre>
       </div>
     </div>
 
@@ -296,7 +318,8 @@ group2 = c('Philippines','Fiji','Nigeria')
 mean( 
   sum(pop$rural_pop[pop$year==2016 & pop$region_name %in% group1]),  
   sum(pop$rural_pop[pop$year==2016 & pop$region_name %in% group2]) 
-)</code></pre>
+)
+        </code></pre>
       </div>
     </div>
 
@@ -308,7 +331,7 @@ mean(
 <!-- BOTTOM OF PAGE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 <div class="container"> <a href="#topspace">return to top</a></div>
-<div class="container"> <a href="q1_answers.xlsx">download Q3 answer sheet</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
 <br><br><br><br>
 
 </body>

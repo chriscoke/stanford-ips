@@ -166,8 +166,8 @@ tbl[top, ]
 
 pchange = gdp[gdp$region_type=='C',] %>% arrange(region_name, year) %>% mutate(perc_change = (gdp_pcap / lag(gdp_pcap)) - 1)
 pchange[pchange$year==1960,"perc_change"] = NA
-pchange[which.max(pchange$perc_change),]
 pchange[which.min(pchange$perc_change),]
+pchange[which.max(pchange$perc_change),]
 
 # B1.	What is the year of largest GDP per capita for each country?
 
@@ -183,6 +183,10 @@ mean(max.gdp$best.year)
 # B3.	For which country has the most years passed since is its highest GDP per capita? And in what year was that peak?
 
 max.gdp[which.min(max.gdp$best.year),]
+
+# B4. For which country has the fewest years passed since is its highest GDP per capita? And in what year was that peak?
+
+max.gdp[which.max(max.gdp$best.year),]
 
 
 #########################################################################################
@@ -209,7 +213,7 @@ countries[countries$region_name %in% question.countries, ]
 
 # B. What is the percent change in % of Public Expenditure on Healthcare for the following countries and years? (topic: difference from previous)
 # United States, Brazil, Ukraine
-# 2001 - 2014
+# 2000 - 2016
 
 q.countries = c("United States", "Brazil", "Ukraine")
 q.years = seq(2000,2016, by=1)

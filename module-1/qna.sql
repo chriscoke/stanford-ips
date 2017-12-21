@@ -343,6 +343,19 @@ and region_type = 'C'
 order by year asc
 limit 1
 
+-- B4. For which country has the fewest years passed since its highest GDP per capita? And in what year was that peak?
+
+select region_name, year, now() as today, now() - year as elapsed
+from gdp_pcap g
+where region_type = 'C'
+and gdp_pcap = (select max(gdp_pcap) from gdp_pcap where region_name = g.region_name group by region_name)
+and now() - year =  (
+	select min(now() - year) as shortest_elapsed
+	from gdp_pcap g
+	where g.gdp_pcap = (select max(gdp_pcap) from gdp_pcap where region_name = g.region_name group by region_name)
+	and region_type = 'C'
+)
+
 -- --------------------------------
 -- 8. WINDOW CALCULATIONS
 
@@ -390,8 +403,8 @@ and region_name in ("China", "India", "United States", "Egypt, Arab Rep.", "Braz
 select 
 	h1.region_name, 
 	h2.year, 
-	h1.health_exp, 
-	h2.health_exp, 
+	h1.health_exp as prior_exp, 
+	h2.health_exp as current_exp,
 	h2.health_exp / h1.health_exp - 1 as perc_change
 from health_exp h1
 join health_exp h2 
@@ -405,9 +418,9 @@ and h2.year between 2000 and 2016
 select 
 	h1.region_name, 
 	h2.year, 
-	h1.health_exp, 
-	h2.health_exp, 
-	h3.health_exp,
+	h1.health_exp as prior_exp, 
+	h2.health_exp as current_exp, 
+	h3.health_exp as yr2000_exp,
 	h2.health_exp / h3.health_exp as health_index
 from health_exp h1
 join health_exp h2 

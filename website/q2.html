@@ -30,7 +30,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="q1.html">1: Data Manipulation</a></li>
+                <li><a href="module1_home.html">1: Data Manipulation</a></li>
                 <li><a href="#">2: Visualization</a></li>
                 <li><a href="#">3: Data Structures</a></li>
               </ul>
@@ -47,8 +47,12 @@
 	<h3> Row and Column Operations </h3>
 </div>
 
+<div class="container">
+  <p> The purpose of this question is to demonstrate how to perform operations on entire rows or columns of a dataset.  I wouldn't call this exactly matrix operations as you would read about in your Statistics textbook, but the concept of calculating over an entire matrix of rows and columns is the same concept.</p>  
+</div>
+
 <br>
-<div class="container"> <a href="q1_answers.xlsx">download Q2 answer sheet</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
 <br>
 
 <!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -68,11 +72,14 @@
       </div>
       <div id="collapseA1" class="panel-collapse collapse">
 		    <pre><code class="language-javascript">
+// Straightforward
+
 =AVERAGE(GDP.PCAP!AP2:AZ265) // Aruba
 =AVERAGE(GDP.PCAP!AP3:AZ266) // Afghanistan
 
 // to get all of them, be sure to utilize Excel's "drag" functionality for updating formulas: 
-// https://www.youtube.com/watch?time_continue=22&v=zcA9MMskIRg</code></pre>
+// https://www.youtube.com/watch?time_continue=22&v=zcA9MMskIRg
+        </code></pre>
 	    </div>
     </div>
 
@@ -83,10 +90,14 @@
       </div>
       <div id="collapseA2" class="panel-collapse collapse">
         <pre><code class="language-javascript">
+// Introducing 'group by' in SQL
+// this is core functionality
+
 select region_name, avg(gdp_pcap)
 from gdp_pcap
 where year between 1995 and 2005
-group by region_name</code></pre>
+group by region_name
+        </code></pre>
       </div>
     </div>
 
@@ -109,7 +120,8 @@ library(dplyr)
 
 subset = gdp[ between(gdp$year, 1995, 2005), ]
 tbl = subset %>% group_by(region_name) %>% summarize( avg_gdp = mean(gdp_pcap, na.rm=T) )
-tbl</code></pre>
+tbl
+        </code></pre>
       </div>
     </div>
 
@@ -134,10 +146,12 @@ tbl</code></pre>
       </div>
       <div id="collapseB1" class="panel-collapse collapse">
         <pre><code class="language-javascript">
+// Again, straighforward
+// same formula for 2011-2014, but need to also drag it across horizontally
+
 =MAX(HEALTH!BC2:BC265) // 2009
 =MAX(HEALTH!BD2:BD265) // 2010
-// same formula for 2011-2014, but need to also drag it across horizontally
-</code></pre>
+        </code></pre>
       </div>
     </div>
 
@@ -151,7 +165,8 @@ tbl</code></pre>
 select year, max(health_exp)
 from health_exp
 where year between 2009 and 2014
-group by year</code></pre>
+group by year
+        </code></pre>
       </div>
     </div>
 
@@ -169,7 +184,9 @@ tbl
 // "between" might be new to you...
 // remember, if there is a function or syntax you don't recognize consider the following:
 // (1) in RStudio, type ?[function], so in this case, ?between.  That gives you the help page.
-// (2) google it (seriously), and specifically using keywords for the package (in this case, "dplyr"), the function (in this case, "between"), and Stack Overflow (the best Q&A resource on the web)  try "dplyr between r Stack Overflow" and you might like the first result! </code></pre>
+// (2) google it (seriously), and specifically using keywords for the package (in this case, "dplyr"), the function (in this case, "between"), and Stack Overflow (the best Q&A resource on the web)  
+// try searching "dplyr between r Stack Overflow" and you might like the first result! 
+        </code></pre>
       </div>
     </div>
 
@@ -178,7 +195,7 @@ tbl
 </div>
 
 <div class="container"> <a href="#topspace">return to top</a></div>
-<div class="container"> <a href="q1_answers.xlsx">download Q1 answer sheet</a></div>
+<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
 <br><br><br><br>
 
 </body>
