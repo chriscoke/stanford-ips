@@ -42,167 +42,195 @@
 
 <div id="topspace"><br><br><br><br></div>
 
-<div class="container">
-	<h1> Question 2 </h1>
-	<h3> Row and Column Operations </h3>
-</div>
+<!-- Fixed sidebar -->
 
-<div class="container">
-  <p> The purpose of this question is to demonstrate how to perform operations on entire rows or columns of a dataset.  I wouldn't call this exactly matrix operations as you would read about in your Statistics textbook, but the concept of calculating over an entire matrix of rows and columns is the same concept.</p>  
-</div>
+<div class="col-sm-2 offset-sm-1 blog-sidebar">
+  <div class="sidebar-module sidebar-module-inset">
+    <h4>Module 1: Data Manipulation</h4>
+  </div>
+  <div class="sidebar-module">
+    <h4>Navigation</h4>
+    <ol class="list-unstyled">
+      <li> <a href="q1.html">Q1: Math and Statistics Calculations</a> </li>
+      <li> <a href="q2.html">Q2: Row and Column Operations</a> </li>
+      <li> <a href="q3.html">Q3: Conditional Selections</a> </li>
+      <li> <a href="q4.html">Q4: Transposing Data</a> </li>
+      <li> <a href="q5.html">Q5: Aggregating</a> </li>
+      <li> <a href="q6.html">Q6: Subsetting</a> </li>
+      <li> <a href="q7.html">Q7: Case Matching</a> </li>
+      <li> <a href="q8.html">Q8: Window Calculations</a> </li>
+    </ol>
+  </div>
+</div><!-- /.blog-sidebar -->
 
-<br>
-<div class="container"> Click each section below to exand solutions one-by-one, or <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
-<br>
+<!-- Main Area -->
 
-<!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<div class="col-sm-8 blog-main">  
+  <div class="container">
+  	<h1> Question 2 </h1>
+  	<h3> Row and Column Operations </h3>
+  </div>
 
-<div class="container"><p class="q"> A: What is the average GDP per capita for each country and region over the period 1995-2005?</p></div>
+  <div class="container">
+    <p> The purpose of this question is to demonstrate how to perform operations on entire rows or columns of a dataset.  I wouldn't call this exactly matrix operations as you would read about in your Statistics textbook, but the concept of calculating over an entire matrix of rows and columns is the same concept.</p>  
+  </div>
 
-<br>
+  <br>
+  <div class="container"> Click each section below to exand solutions one-by-one, or <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
+  <br>
 
-<div class="container">
-  <p><i>Solutions (click to expand)</i></p>
-  <div class="panel-group">
-    
-    <!-- Excel -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA1">Excel</a></h4>
+  <!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+  <div class="container"><p class="q"> A: What is the average GDP per capita for each country and region over the period 1995-2005?</p></div>
+
+  <br>
+
+  <div class="container">
+    <p><i>Solutions (click to expand)</i></p>
+    <div class="panel-group">
+      
+      <!-- Excel -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA1">Excel</a></h4>
+        </div>
+        <div id="collapseA1" class="panel-collapse collapse">
+  		    <pre><code class="language-javascript">
+  // Straightforward
+
+  =AVERAGE(GDP.PCAP!AP2:AZ265) // Aruba
+  =AVERAGE(GDP.PCAP!AP3:AZ266) // Afghanistan
+
+  // to get all of them, be sure to utilize Excel's "drag" functionality for updating formulas: 
+  // https://www.youtube.com/watch?time_continue=22&v=zcA9MMskIRg
+          </code></pre>
+  	    </div>
       </div>
-      <div id="collapseA1" class="panel-collapse collapse">
-		    <pre><code class="language-javascript">
-// Straightforward
 
-=AVERAGE(GDP.PCAP!AP2:AZ265) // Aruba
-=AVERAGE(GDP.PCAP!AP3:AZ266) // Afghanistan
+      <!-- SQL -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA2">SQL</a></h4>
+        </div>
+        <div id="collapseA2" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  // Introducing 'group by' in SQL
+  // this is core functionality
 
-// to get all of them, be sure to utilize Excel's "drag" functionality for updating formulas: 
-// https://www.youtube.com/watch?time_continue=22&v=zcA9MMskIRg
-        </code></pre>
-	    </div>
-    </div>
-
-    <!-- SQL -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA2">SQL</a></h4>
+  select region_name, avg(gdp_pcap)
+  from gdp_pcap
+  where year between 1995 and 2005
+  group by region_name
+          </code></pre>
+        </div>
       </div>
-      <div id="collapseA2" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-// Introducing 'group by' in SQL
-// this is core functionality
 
-select region_name, avg(gdp_pcap)
-from gdp_pcap
-where year between 1995 and 2005
-group by region_name
-        </code></pre>
+      <!-- R -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA3">R</a></h4>
+        </div>
+        <div id="collapseA3" class="panel-collapse collapse">
+          <pre><code class="language-javascript"> 
+  // For many following questions, you will need the "dplyr" pacakage in R.  Our new best friend.
+  // The 1st line loads the package into your computer, if you've never done that before
+  // The 2nd line loads the package into your current R session
+  // If you haven't used dplyr before, take a tutorial here first: http://dplyr.tidyverse.org/
+
+  install.packages("dplyr")
+  library(dplyr)
+
+  // and now using dplyr
+
+  subset = gdp[ between(gdp$year, 1995, 2005), ]
+  tbl = subset %>% group_by(region_name) %>% summarize( avg_gdp = mean(gdp_pcap, na.rm=T) )
+  tbl
+          </code></pre>
+        </div>
       </div>
-    </div>
 
-    <!-- R -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA3">R</a></h4>
-      </div>
-      <div id="collapseA3" class="panel-collapse collapse">
-        <pre><code class="language-javascript"> 
-// For many following questions, you will need the "dplyr" pacakage in R.  Our new best friend.
-// The 1st line loads the package into your computer, if you've never done that before
-// The 2nd line loads the package into your current R session
-// If you haven't used dplyr before, take a tutorial here first: http://dplyr.tidyverse.org/
-
-install.packages("dplyr")
-library(dplyr)
-
-// and now using dplyr
-
-subset = gdp[ between(gdp$year, 1995, 2005), ]
-tbl = subset %>% group_by(region_name) %>% summarize( avg_gdp = mean(gdp_pcap, na.rm=T) )
-tbl
-        </code></pre>
-      </div>
     </div>
 
   </div>
 
-</div>
+  <!-- PART B ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+      
+  <div class="container"><p class="q"> B: What is the maximum % of Public Expenditure dedicated to health for each year below? <br> 2009-2014 </p></div>
 
-<!-- PART B ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-    
-<div class="container"><p class="q"> B: What is the maximum % of Public Expenditure dedicated to health for each year below? <br> 2009-2014 </p></div>
+  <br>
 
-<br>
+  <div class="container">
+    <p><i>Solutions (click to expand)</i></p>
+    <div class="panel-group">
+      
+      <!-- Excel -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB1">Excel</a></h4>
+        </div>
+        <div id="collapseB1" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  // Again, straighforward
+  // same formula for 2011-2014, but need to also drag it across horizontally
 
-<div class="container">
-  <p><i>Solutions (click to expand)</i></p>
-  <div class="panel-group">
-    
-    <!-- Excel -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB1">Excel</a></h4>
+  =MAX(HEALTH!BC2:BC265) // 2009
+  =MAX(HEALTH!BD2:BD265) // 2010
+          </code></pre>
+        </div>
       </div>
-      <div id="collapseB1" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-// Again, straighforward
-// same formula for 2011-2014, but need to also drag it across horizontally
 
-=MAX(HEALTH!BC2:BC265) // 2009
-=MAX(HEALTH!BD2:BD265) // 2010
-        </code></pre>
+      <!-- SQL -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB2">SQL</a></h4>
+        </div>
+        <div id="collapseB2" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  select year, max(health_exp)
+  from health_exp
+  where year between 2009 and 2014
+  group by year
+          </code></pre>
+        </div>
       </div>
-    </div>
 
-    <!-- SQL -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB2">SQL</a></h4>
-      </div>
-      <div id="collapseB2" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-select year, max(health_exp)
-from health_exp
-where year between 2009 and 2014
-group by year
-        </code></pre>
-      </div>
-    </div>
+      <!-- R -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB3">R</a></h4>
+        </div>
+        <div id="collapseB3" class="panel-collapse collapse">
+          <pre><code class="language-javascript"> 
+  subset = health[ between(health$year, 2009, 2014), ]
+  tbl = subset %>% group_by(year) %>% summarize( max_health = max(health_exp, na.rm=T))
+  tbl
 
-    <!-- R -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB3">R</a></h4>
+  // "between" might be new to you...
+  // remember, if there is a function or syntax you don't recognize consider the following:
+  // (1) in RStudio, type ?[function], so in this case, ?between.  That gives you the help page.
+  // (2) google it (seriously), and specifically using keywords for the package (in this case, "dplyr"), the function (in this case, "between"), and Stack Overflow (the best Q&A resource on the web)  
+  // try searching "dplyr between r Stack Overflow" and you might like the first result! 
+          </code></pre>
+        </div>
       </div>
-      <div id="collapseB3" class="panel-collapse collapse">
-        <pre><code class="language-javascript"> 
-subset = health[ between(health$year, 2009, 2014), ]
-tbl = subset %>% group_by(year) %>% summarize( max_health = max(health_exp, na.rm=T))
-tbl
 
-// "between" might be new to you...
-// remember, if there is a function or syntax you don't recognize consider the following:
-// (1) in RStudio, type ?[function], so in this case, ?between.  That gives you the help page.
-// (2) google it (seriously), and specifically using keywords for the package (in this case, "dplyr"), the function (in this case, "between"), and Stack Overflow (the best Q&A resource on the web)  
-// try searching "dplyr between r Stack Overflow" and you might like the first result! 
-        </code></pre>
-      </div>
     </div>
 
   </div>
 
-</div>
+  <!-- BOTTOM OF PAGE -->
 
-<div class="container"> <a href="#topspace">return to top</a></div>
-<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
-<br><br><br><br>
+  <div class="container"> <a href="#topspace">return to top</a></div>
+  <div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
+  <br><br><br><br>
 
-<footer class="footer">
-      <div class="container">
-        <span>Created in 2018 for Stanford IPS Students</span>
-      </div>
-</footer>
+  <footer class="footer">
+        <div class="container">
+          <span>Created in 2018 for Stanford IPS Students</span>
+        </div>
+  </footer>
+
+</div> <!-- End of Main Column -->
 
 </body>
 </html>

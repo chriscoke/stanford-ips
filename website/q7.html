@@ -42,396 +42,423 @@
 
 <div id="topspace"><br><br><br><br></div>
 
-<div class="container">
-	<h1> Question 7 </h1>
-	<h3> Case Matching </h3>
-</div>
+<!-- Fixed sidebar -->
 
-<div class="container">
-  <p> This question approaches the following generic problem: you have a certain value, and you want to find to which sets does that value belong.  For instance, it's trivial to calculate the maximum GDP from a vector.  However, what if you want to find the country associated with that maximum GDP?  In Excel, the INDEX, MATCH, and/or VLOOKUP functions area utilized.  In SQL you will see sub-queries within a where statement. And in R, the 'which' functionality and its extensions are primarily used. </p>  
-</div>
+<div class="col-sm-2 offset-sm-1 blog-sidebar">
+  <div class="sidebar-module sidebar-module-inset">
+    <h4>Module 1: Data Manipulation</h4>
+  </div>
+  <div class="sidebar-module">
+    <h4>Navigation</h4>
+    <ol class="list-unstyled">
+      <li> <a href="q1.html">Q1: Math and Statistics Calculations</a> </li>
+      <li> <a href="q2.html">Q2: Row and Column Operations</a> </li>
+      <li> <a href="q3.html">Q3: Conditional Selections</a> </li>
+      <li> <a href="q4.html">Q4: Transposing Data</a> </li>
+      <li> <a href="q5.html">Q5: Aggregating</a> </li>
+      <li> <a href="q6.html">Q6: Subsetting</a> </li>
+      <li> <a href="q7.html">Q7: Case Matching</a> </li>
+      <li> <a href="q8.html">Q8: Window Calculations</a> </li>
+    </ol>
+  </div>
+</div><!-- /.blog-sidebar -->
 
-<br>
-<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
-<br>
+<!-- Main Area -->
 
-<!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<div class="col-sm-8 blog-main">     
 
-<div class="container"><p class="q"> A: Which countries had the largest and smallest % change in their GDP per capita in any two-year period? For what % change and in what year? Excluding periods where reporting of data went in/out.
-</p></div>
+  <div class="container">
+  	<h1> Question 7 </h1>
+  	<h3> Case Matching </h3>
+  </div>
 
-<br>
+  <div class="container">
+    <p> This question approaches the following generic problem: you have a certain value, and you want to find to which sets does that value belong.  For instance, it's trivial to calculate the maximum GDP from a vector.  However, what if you want to find the country associated with that maximum GDP?  In Excel, the INDEX, MATCH, and/or VLOOKUP functions area utilized.  In SQL you will see sub-queries within a where statement. And in R, the 'which' functionality and its extensions are primarily used. </p>  
+  </div>
 
-<div class="container">
-  <p><i>Solutions (click to expand)</i></p>
-  <div class="panel-group">
-    
-    <!-- Excel -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA1">Excel</a></h4>
+  <br>
+  <div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
+  <br>
+
+  <!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+  <div class="container"><p class="q"> A: Which countries had the largest and smallest % change in their GDP per capita in any two-year period? For what % change and in what year? Excluding periods where reporting of data went in/out.
+  </p></div>
+
+  <br>
+
+  <div class="container">
+    <p><i>Solutions (click to expand)</i></p>
+    <div class="panel-group">
+      
+      <!-- Excel -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA1">Excel</a></h4>
+        </div>
+        <div id="collapseA1" class="panel-collapse collapse">
+  		    <pre><code class="language-javascript">
+  // See answer sheet for details
+  // Step 1: create a new sheet. For each combination of Year and Country, calculate the percent change from the prior year.  Use IF logic to adjust for periods where the GDP per capita is not reported
+  // Step 2: for each country, calculate the maximum and the minimum % change across all year-over-year % changes
+  // Step 3: use INDEX and MATCH to find the year in which this max $ change occurred (from step 2) for each country
+  // Step 4: repeat Step 3 for the min. You can now report the largest and smallest % changes, and the associated years 
+  // Step 5: to get the countries for these max and min values, again use INDEX and MATCH or VLOOKUP
+          </code></pre>
+  	    </div>
       </div>
-      <div id="collapseA1" class="panel-collapse collapse">
-		    <pre><code class="language-javascript">
-// See answer sheet for details
-// Step 1: create a new sheet. For each combination of Year and Country, calculate the percent change from the prior year.  Use IF logic to adjust for periods where the GDP per capita is not reported
-// Step 2: for each country, calculate the maximum and the minimum % change across all year-over-year % changes
-// Step 3: use INDEX and MATCH to find the year in which this max $ change occurred (from step 2) for each country
-// Step 4: repeat Step 3 for the min. You can now report the largest and smallest % changes, and the associated years 
-// Step 5: to get the countries for these max and min values, again use INDEX and MATCH or VLOOKUP
-        </code></pre>
-	    </div>
-    </div>
 
-    <!-- SQL -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA2">SQL</a></h4>
+      <!-- SQL -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA2">SQL</a></h4>
+        </div>
+        <div id="collapseA2" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  // There may be a few ways to accomplish this (can you come up with one?)
+  // Here, I split it into two parts
+
+  // part 1: The maximum % change (note: order descending) 
+
+  select 
+    g1.region_name, 
+    g1.gdp_pcap as metric1, 
+    g1.year as year1, 
+    g2.gdp_pcap as metric2, 
+    g2.year as year2,
+    g2.gdp_pcap / g1.gdp_pcap - 1 as perc_change
+  from gdp_pcap g1
+  join gdp_pcap g2 
+    on g2.region_code = g1.region_code
+    and g2.year = g1.year + 1
+  order by g2.gdp_pcap / g1.gdp_pcap - 1 desc
+  limit 1
+
+  // part 2: The minimum % change (note: order ascending) 
+
+  select 
+    g1.region_name, 
+    g1.gdp_pcap as metric1, 
+    g1.year as year1, 
+    g2.gdp_pcap as metric2, 
+    g2.year as year2,
+    g2.gdp_pcap / g1.gdp_pcap - 1 as perc_change
+  from gdp_pcap g1
+  join gdp_pcap g2 
+    on g2.region_code = g1.region_code
+    and g2.year = g1.year + 1
+  order by g2.gdp_pcap / g1.gdp_pcap - 1 asc -- only difference
+  limit 1
+          </code></pre>
+        </div>
       </div>
-      <div id="collapseA2" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-// There may be a few ways to accomplish this (can you come up with one?)
-// Here, I split it into two parts
 
-// part 1: The maximum % change (note: order descending) 
+      <!-- R -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA3">R</a></h4>
+        </div>
+        <div id="collapseA3" class="panel-collapse collapse">
+          <pre><code class="language-javascript"> 
+  // Notice the use of 'which.min' and 'which.max'
 
-select 
-  g1.region_name, 
-  g1.gdp_pcap as metric1, 
-  g1.year as year1, 
-  g2.gdp_pcap as metric2, 
-  g2.year as year2,
-  g2.gdp_pcap / g1.gdp_pcap - 1 as perc_change
-from gdp_pcap g1
-join gdp_pcap g2 
-  on g2.region_code = g1.region_code
-  and g2.year = g1.year + 1
-order by g2.gdp_pcap / g1.gdp_pcap - 1 desc
-limit 1
-
-// part 2: The minimum % change (note: order ascending) 
-
-select 
-  g1.region_name, 
-  g1.gdp_pcap as metric1, 
-  g1.year as year1, 
-  g2.gdp_pcap as metric2, 
-  g2.year as year2,
-  g2.gdp_pcap / g1.gdp_pcap - 1 as perc_change
-from gdp_pcap g1
-join gdp_pcap g2 
-  on g2.region_code = g1.region_code
-  and g2.year = g1.year + 1
-order by g2.gdp_pcap / g1.gdp_pcap - 1 asc -- only difference
-limit 1
-        </code></pre>
+  pchange = gdp[gdp$region_type=='C',] %>% arrange(region_name, year) %>% mutate(perc_change = (gdp_pcap / lag(gdp_pcap)) - 1)
+  pchange[pchange$year==1960,"perc_change"] = NA
+  pchange[which.min(pchange$perc_change),]
+  pchange[which.max(pchange$perc_change),]
+          </code></pre>
+        </div>
       </div>
-    </div>
 
-    <!-- R -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA3">R</a></h4>
-      </div>
-      <div id="collapseA3" class="panel-collapse collapse">
-        <pre><code class="language-javascript"> 
-// Notice the use of 'which.min' and 'which.max'
-
-pchange = gdp[gdp$region_type=='C',] %>% arrange(region_name, year) %>% mutate(perc_change = (gdp_pcap / lag(gdp_pcap)) - 1)
-pchange[pchange$year==1960,"perc_change"] = NA
-pchange[which.min(pchange$perc_change),]
-pchange[which.max(pchange$perc_change),]
-        </code></pre>
-      </div>
     </div>
 
   </div>
 
-</div>
+  <!-- PART B1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<!-- PART B1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <div class="container"><p class="q"> B1: What is the year of largest GDP per capita for each country?
+  </p></div>
 
-<div class="container"><p class="q"> B1: What is the year of largest GDP per capita for each country?
-</p></div>
+  <br>
 
-<br>
-
-<div class="container">
-  <p><i>Solutions (click to expand)</i></p>
-  <div class="panel-group">
-    
-    <!-- Excel -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB11">Excel</a></h4>
+  <div class="container">
+    <p><i>Solutions (click to expand)</i></p>
+    <div class="panel-group">
+      
+      <!-- Excel -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB11">Excel</a></h4>
+        </div>
+        <div id="collapseB11" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  // See answer sheet for details
+  // Step 1: calculate the maximum GDP for each country
+  // Step 2: use INDEX and MATCH to get the year in which this occurred
+  // Step 3: filter the list to only countries, either by writing a list out and then vlookup against it, or using table filters
+          </code></pre>
+        </div>
       </div>
-      <div id="collapseB11" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-// See answer sheet for details
-// Step 1: calculate the maximum GDP for each country
-// Step 2: use INDEX and MATCH to get the year in which this occurred
-// Step 3: filter the list to only countries, either by writing a list out and then vlookup against it, or using table filters
-        </code></pre>
+
+      <!-- SQL -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB12">SQL</a></h4>
+        </div>
+        <div id="collapseB12" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  // This is an extremely common framework for case matching, and SQL is very powerful in accomplishing it
+  // Here, we'll use a variant of a sub-join as you've seen them before
+  // The parenthetical on the 3rd line returns only a single gdppcap value per region_name, and therefore can be linked directly to this value in the main table "g"
+  // Note that you do not need to have an alias, since it's not brought back in via a join but rather an = statement
+  // This is all possible because SQL allows you to reference the table "g" within the parenthetical
+
+  select region_name, year
+  from gdp_pcap g
+  where g.gdp_pcap = (select max(gdp_pcap) from gdp_pcap where region_name = g.region_name group by region_name)
+  order by region_name
+          </code></pre>
+        </div>
       </div>
-    </div>
 
-    <!-- SQL -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB12">SQL</a></h4>
+      <!-- R -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB13">R</a></h4>
+        </div>
+        <div id="collapseB13" class="panel-collapse collapse">
+          <pre><code class="language-javascript"> 
+  // need to first find the countries that do not have GDP per Capita reported
+  nogdp = gdp %>% group_by(region_name) %>% summarize(none = all(is.na(gdp_pcap)))
+
+  // then set the criteria to exclude these and only include countries (type=C)
+  candidates = gdp$region_name %in% nogdp$region_name[nogdp$none==F] & gdp$region_type == 'C'
+
+  // then find the best year for each country
+  max.gdp = gdp[candidates, ] %>% group_by(region_name) %>% summarize(best.year = year[which.max(gdp_pcap)])
+  max.gdp
+          </code></pre>
+        </div>
       </div>
-      <div id="collapseB12" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-// This is an extremely common framework for case matching, and SQL is very powerful in accomplishing it
-// Here, we'll use a variant of a sub-join as you've seen them before
-// The parenthetical on the 3rd line returns only a single gdppcap value per region_name, and therefore can be linked directly to this value in the main table "g"
-// Note that you do not need to have an alias, since it's not brought back in via a join but rather an = statement
-// This is all possible because SQL allows you to reference the table "g" within the parenthetical
 
-select region_name, year
-from gdp_pcap g
-where g.gdp_pcap = (select max(gdp_pcap) from gdp_pcap where region_name = g.region_name group by region_name)
-order by region_name
-        </code></pre>
-      </div>
-    </div>
-
-    <!-- R -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB13">R</a></h4>
-      </div>
-      <div id="collapseB13" class="panel-collapse collapse">
-        <pre><code class="language-javascript"> 
-// need to first find the countries that do not have GDP per Capita reported
-nogdp = gdp %>% group_by(region_name) %>% summarize(none = all(is.na(gdp_pcap)))
-
-// then set the criteria to exclude these and only include countries (type=C)
-candidates = gdp$region_name %in% nogdp$region_name[nogdp$none==F] & gdp$region_type == 'C'
-
-// then find the best year for each country
-max.gdp = gdp[candidates, ] %>% group_by(region_name) %>% summarize(best.year = year[which.max(gdp_pcap)])
-max.gdp
-        </code></pre>
-      </div>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- PART B2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-
-<div class="container"><p class="q"> B2: In what year on average did the world's countries have peak GDP per capita?
-</p></div>
-
-<br>
-
-<div class="container">
-  <p><i>Solutions (click to expand)</i></p>
-  <div class="panel-group">
-    
-    <!-- Excel -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB21">Excel</a></h4>
-      </div>
-      <div id="collapseB21" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-// See answer sheet for details
-// Use the list you created in question B1, and simply take the average of those years
-        </code></pre>
-      </div>
-    </div>
-
-    <!-- SQL -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB22">SQL</a></h4>
-      </div>
-      <div id="collapseB22" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-select avg(year)
-from gdp_pcap g
-where g.gdp_pcap = (select max(gdp_pcap) from gdp_pcap where region_name = g.region_name group by region_name)
-and region_type = 'C'
-        </code></pre>
-      </div>
-    </div>
-
-    <!-- R -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB23">R</a></h4>
-      </div>
-      <div id="collapseB23" class="panel-collapse collapse">
-        <pre><code class="language-javascript"> 
-// since you've already created a list to answer B1 (and named it "max.gdp"), simply take the average of this list
-
-mean(max.gdp$best.year)
-        </code></pre>
-      </div>
     </div>
 
   </div>
 
-</div>
+  <!-- PART B2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<!-- PART B3 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <div class="container"><p class="q"> B2: In what year on average did the world's countries have peak GDP per capita?
+  </p></div>
 
-<div class="container"><p class="q"> B3: For which country has the most years passed since is its highest GDP per capita? And in what year was that peak?
-</p></div>
+  <br>
 
-<br>
-
-<div class="container">
-  <p><i>Solutions (click to expand)</i></p>
-  <div class="panel-group">
-    
-    <!-- Excel -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB31">Excel</a></h4>
+  <div class="container">
+    <p><i>Solutions (click to expand)</i></p>
+    <div class="panel-group">
+      
+      <!-- Excel -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB21">Excel</a></h4>
+        </div>
+        <div id="collapseB21" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  // See answer sheet for details
+  // Use the list you created in question B1, and simply take the average of those years
+          </code></pre>
+        </div>
       </div>
-      <div id="collapseB31" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-// See answer sheet for details
-// Step 1: to get the year, take the minimum of your list of years in B1
-// Step 2: use INDEX and MATCH to get the country associated with this minimum year
-// How could this go wrong?  See the next question... 
-        </code></pre>
-      </div>
-    </div>
 
-    <!-- SQL -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB32">SQL</a></h4>
-      </div>
-      <div id="collapseB32" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-select region_name, year
-from gdp_pcap g
-where g.gdp_pcap = (select max(gdp_pcap) from gdp_pcap where region_name = g.region_name group by region_name)
-and region_type = 'C'
-order by year asc
-limit 1
-        </code></pre>
-      </div>
-    </div>
-
-    <!-- R -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB33">R</a></h4>
-      </div>
-      <div id="collapseB33" class="panel-collapse collapse">
-        <pre><code class="language-javascript"> 
-// The which.min function combines two actions: (a) find the minimum value, (b) return the element number of that minimum value
-// It's combining what was done with MIN, INDEX, and MATCH in Excel
-
-max.gdp[which.min(max.gdp$best.year),]
-        </code></pre>
-      </div>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- PART B4 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-
-<div class="container"><p class="q"> B4: For which country has the fewest years passed since is its highest GDP per capita? And in what year was that peak?
-<br> same questions as B3, but not looking for most recent
-</p></div>
-
-<br>
-
-<div class="container">
-  <p><i>Solutions (click to expand)</i></p>
-  <div class="panel-group">
-    
-    <!-- Excel -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB41">Excel</a></h4>
-      </div>
-      <div id="collapseB41" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-// See answer sheet for details
-// Oh the perils of INDEX and MATCH!
-// if there is more than one matching value, it will only return the first. Same is true for VLOOKUP and HLOOKUP
-// since there are 29 countries that hit their peak GDP per capita in 2016, you need to find all of them
-// remember, there is no way to know ahead of time, so be very careful with INDEX and MATCH and check your work
-        </code></pre>
-      </div>
-    </div>
-
-    <!-- SQL -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB42">SQL</a></h4>
-      </div>
-      <div id="collapseB42" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-// The solution to the last question (B3) was correct, but was cheating. 
-// It presumed that only one country (hence, 'limit 1') had the most years passed since its peak GDP per Capita, i.e. that there were no ties
-// However, this question is asked specifically because there are ties. Now the query becomes a little more complicated
-// An additional 'where' condition compares the # of years elapsed since peak GDP for each country to the minimum ("shortest_elapsed") among all countries, and therefore returns all of those
-
-select region_name, year, now() as today, now() - year as elapsed
-from gdp_pcap g
-where region_type = 'C'
-and gdp_pcap = (select max(gdp_pcap) from gdp_pcap where region_name = g.region_name group by region_name)
-and now() - year =  (
-  select min(now() - year) as shortest_elapsed
+      <!-- SQL -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB22">SQL</a></h4>
+        </div>
+        <div id="collapseB22" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  select avg(year)
   from gdp_pcap g
   where g.gdp_pcap = (select max(gdp_pcap) from gdp_pcap where region_name = g.region_name group by region_name)
   and region_type = 'C'
-)
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
-    </div>
 
-    <!-- R -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB43">R</a></h4>
+      <!-- R -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB23">R</a></h4>
+        </div>
+        <div id="collapseB23" class="panel-collapse collapse">
+          <pre><code class="language-javascript"> 
+  // since you've already created a list to answer B1 (and named it "max.gdp"), simply take the average of this list
+
+  mean(max.gdp$best.year)
+          </code></pre>
+        </div>
       </div>
-      <div id="collapseB43" class="panel-collapse collapse">
-        <pre><code class="language-javascript"> 
-// Fortunately, in R, there is no adjustment needed
-// Whenever you compare values in R, all matches will be returned
 
-max.gdp[which.max(max.gdp$best.year),]
-
-// To convince yourself of this, simulate something
-// Heed the difference between "==" and "%in%"
-a = c(1,2,3)
-b = c(2,3,4)
-a == b
-which(a == b)
-a %in% b
-which(a %in% b)
-        </code></pre>
-      </div>
     </div>
 
   </div>
 
-</div>
+  <!-- PART B3 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<!-- BOTTOM OF PAGE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <div class="container"><p class="q"> B3: For which country has the most years passed since is its highest GDP per capita? And in what year was that peak?
+  </p></div>
 
-<div class="container"> <a href="#topspace">return to top</a></div>
-<div class="container"> <a href="q1_answers.xlsx">download module 1 sheet</a></div>
-<br><br><br><br>
+  <br>
 
-<footer class="footer">
-      <div class="container">
-        <span>Created in 2018 for Stanford IPS Students</span>
+  <div class="container">
+    <p><i>Solutions (click to expand)</i></p>
+    <div class="panel-group">
+      
+      <!-- Excel -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB31">Excel</a></h4>
+        </div>
+        <div id="collapseB31" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  // See answer sheet for details
+  // Step 1: to get the year, take the minimum of your list of years in B1
+  // Step 2: use INDEX and MATCH to get the country associated with this minimum year
+  // How could this go wrong?  See the next question... 
+          </code></pre>
+        </div>
       </div>
-</footer>
+
+      <!-- SQL -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB32">SQL</a></h4>
+        </div>
+        <div id="collapseB32" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  select region_name, year
+  from gdp_pcap g
+  where g.gdp_pcap = (select max(gdp_pcap) from gdp_pcap where region_name = g.region_name group by region_name)
+  and region_type = 'C'
+  order by year asc
+  limit 1
+          </code></pre>
+        </div>
+      </div>
+
+      <!-- R -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB33">R</a></h4>
+        </div>
+        <div id="collapseB33" class="panel-collapse collapse">
+          <pre><code class="language-javascript"> 
+  // The which.min function combines two actions: (a) find the minimum value, (b) return the element number of that minimum value
+  // It's combining what was done with MIN, INDEX, and MATCH in Excel
+
+  max.gdp[which.min(max.gdp$best.year),]
+          </code></pre>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- PART B4 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+  <div class="container"><p class="q"> B4: For which country has the fewest years passed since is its highest GDP per capita? And in what year was that peak?
+  <br> same questions as B3, but not looking for most recent
+  </p></div>
+
+  <br>
+
+  <div class="container">
+    <p><i>Solutions (click to expand)</i></p>
+    <div class="panel-group">
+      
+      <!-- Excel -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB41">Excel</a></h4>
+        </div>
+        <div id="collapseB41" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  // See answer sheet for details
+  // Oh the perils of INDEX and MATCH!
+  // if there is more than one matching value, it will only return the first. Same is true for VLOOKUP and HLOOKUP
+  // since there are 29 countries that hit their peak GDP per capita in 2016, you need to find all of them
+  // remember, there is no way to know ahead of time, so be very careful with INDEX and MATCH and check your work
+          </code></pre>
+        </div>
+      </div>
+
+      <!-- SQL -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB42">SQL</a></h4>
+        </div>
+        <div id="collapseB42" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  // The solution to the last question (B3) was correct, but was cheating. 
+  // It presumed that only one country (hence, 'limit 1') had the most years passed since its peak GDP per Capita, i.e. that there were no ties
+  // However, this question is asked specifically because there are ties. Now the query becomes a little more complicated
+  // An additional 'where' condition compares the # of years elapsed since peak GDP for each country to the minimum ("shortest_elapsed") among all countries, and therefore returns all of those
+
+  select region_name, year, now() as today, now() - year as elapsed
+  from gdp_pcap g
+  where region_type = 'C'
+  and gdp_pcap = (select max(gdp_pcap) from gdp_pcap where region_name = g.region_name group by region_name)
+  and now() - year =  (
+    select min(now() - year) as shortest_elapsed
+    from gdp_pcap g
+    where g.gdp_pcap = (select max(gdp_pcap) from gdp_pcap where region_name = g.region_name group by region_name)
+    and region_type = 'C'
+  )
+          </code></pre>
+        </div>
+      </div>
+
+      <!-- R -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseB43">R</a></h4>
+        </div>
+        <div id="collapseB43" class="panel-collapse collapse">
+          <pre><code class="language-javascript"> 
+  // Fortunately, in R, there is no adjustment needed
+  // Whenever you compare values in R, all matches will be returned
+
+  max.gdp[which.max(max.gdp$best.year),]
+
+  // To convince yourself of this, simulate something
+  // Heed the difference between "==" and "%in%"
+  a = c(1,2,3)
+  b = c(2,3,4)
+  a == b
+  which(a == b)
+  a %in% b
+  which(a %in% b)
+          </code></pre>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- BOTTOM OF PAGE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+  <div class="container"> <a href="#topspace">return to top</a></div>
+  <div class="container"> <a href="q1_answers.xlsx">download module 1 sheet</a></div>
+  <br><br><br><br>
+
+  <footer class="footer">
+        <div class="container">
+          <span>Created in 2018 for Stanford IPS Students</span>
+        </div>
+  </footer>
+
+</div> <!-- End of Main Column -->
 
 </body>
 </html>

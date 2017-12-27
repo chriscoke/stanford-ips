@@ -42,117 +42,144 @@
 
 <div id="topspace"><br><br><br><br></div>
 
-<div class="container">
-	<h1> Question 6 </h1>
-	<h3> Subsetting </h3>
-</div>
+<!-- Fixed sidebar -->
 
-<div class="container">
-  <p> In this question, we get into more complex versions of of conditional calculations. These are referred to "subsetting" questions because generally the problems can be approached with two parts that are sequential rather than simultaneous: first, apply your criteria, then run the calculations. If not already, it is here that you will see that the intermediate steps in Excel are more challening to both complete and document. </p>  
-</div>
+<div class="col-sm-2 offset-sm-1 blog-sidebar">
+  <div class="sidebar-module sidebar-module-inset">
+    <h4>Module 1: Data Manipulation</h4>
+  </div>
+  <div class="sidebar-module">
+    <h4>Navigation</h4>
+    <ol class="list-unstyled">
+      <li> <a href="q1.html">Q1: Math and Statistics Calculations</a> </li>
+      <li> <a href="q2.html">Q2: Row and Column Operations</a> </li>
+      <li> <a href="q3.html">Q3: Conditional Selections</a> </li>
+      <li> <a href="q4.html">Q4: Transposing Data</a> </li>
+      <li> <a href="q5.html">Q5: Aggregating</a> </li>
+      <li> <a href="q6.html">Q6: Subsetting</a> </li>
+      <li> <a href="q7.html">Q7: Case Matching</a> </li>
+      <li> <a href="q8.html">Q8: Window Calculations</a> </li>
+    </ol>
+  </div>
+</div><!-- /.blog-sidebar -->
 
-<br>
-<div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
-<br>
+<!-- Main Area -->
 
-<!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<div class="col-sm-8 blog-main">        
 
-<div class="container"><p class="q"> A: What were the top 5 largest GDPs per capita in 2000, only among countries with a rural population of at least 20 million in 2016.</p></div>
+  <div class="container">
+  	<h1> Question 6 </h1>
+  	<h3> Subsetting </h3>
+  </div>
 
-<br>
+  <div class="container">
+    <p> In this question, we get into more complex versions of of conditional calculations. These are referred to "subsetting" questions because generally the problems can be approached with two parts that are sequential rather than simultaneous: first, apply your criteria, then run the calculations. If not already, it is here that you will see that the intermediate steps in Excel are more challening to both complete and document. </p>  
+  </div>
 
-<div class="container">
-  <p><i>Solutions (click to expand)</i></p>
-  <div class="panel-group">
-    
-    <!-- Excel -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA1">Excel</a></h4>
+  <br>
+  <div class="container"> <a href="q1_answers.xlsx">download module 1 answer sheet</a></div>
+  <br>
+
+  <!-- PART A ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+  <div class="container"><p class="q"> A: What were the top 5 largest GDPs per capita in 2000, only among countries with a rural population of at least 20 million in 2016.</p></div>
+
+  <br>
+
+  <div class="container">
+    <p><i>Solutions (click to expand)</i></p>
+    <div class="panel-group">
+      
+      <!-- Excel -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA1">Excel</a></h4>
+        </div>
+        <div id="collapseA1" class="panel-collapse collapse">
+  		    <pre><code class="language-javascript">
+  // See answer sheet for details
+          </code></pre>
+  	    </div>
       </div>
-      <div id="collapseA1" class="panel-collapse collapse">
-		    <pre><code class="language-javascript">
-// See answer sheet for details
-        </code></pre>
-	    </div>
-    </div>
 
-    <!-- SQL -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA2">SQL</a></h4>
+      <!-- SQL -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA2">SQL</a></h4>
+        </div>
+        <div id="collapseA2" class="panel-collapse collapse">
+          <pre><code class="language-javascript">
+  // You'll need to use a "sub-join" here.
+  // Recall that all sub-joins must have a an alias. Here, it is "r"
+
+  select 
+    g.region_name,
+    g.gdp_pcap
+  from gdp_pcap g
+  join (
+    select region_code
+    from rural_pop 
+    where rural_pop >= 20000000
+    and year = 2016
+  ) r on r.region_code = g.region_code
+  where g.region_type = 'C'
+  and g.year = 2000
+  order by g.gdp_pcap desc
+  limit 5
+
+  // You might be tempted to go at it purely through where clauses
+  // This would be wrong, and it's helpful to review why
+  // The query would join region_code.year to gdp_pcap.year. And then restrict this to 2016.
+  // So the result of this query is the top 5 GDPs per capita in 2016, not 2010
+
+  select g.region_name, g.gdp_pcap
+  from gdp_pcap g
+  join rural_pop r 
+    on r.region_code = g.region_code
+    and r.year = g.year
+  where g.region_type = 'C'
+  and r.rural_pop >= 20000000 and r.year = 2016
+  order by g.gdp_pcap desc
+  limit 5
+
+  // Is there a way to revise this to be correct?
+          </code></pre>
+        </div>
       </div>
-      <div id="collapseA2" class="panel-collapse collapse">
-        <pre><code class="language-javascript">
-// You'll need to use a "sub-join" here.
-// Recall that all sub-joins must have a an alias. Here, it is "r"
 
-select 
-  g.region_name,
-  g.gdp_pcap
-from gdp_pcap g
-join (
-  select region_code
-  from rural_pop 
-  where rural_pop >= 20000000
-  and year = 2016
-) r on r.region_code = g.region_code
-where g.region_type = 'C'
-and g.year = 2000
-order by g.gdp_pcap desc
-limit 5
-
-// You might be tempted to go at it purely through where clauses
-// This would be wrong, and it's helpful to review why
-// The query would join region_code.year to gdp_pcap.year. And then restrict this to 2016.
-// So the result of this query is the top 5 GDPs per capita in 2016, not 2010
-
-select g.region_name, g.gdp_pcap
-from gdp_pcap g
-join rural_pop r 
-  on r.region_code = g.region_code
-  and r.year = g.year
-where g.region_type = 'C'
-and r.rural_pop >= 20000000 and r.year = 2016
-order by g.gdp_pcap desc
-limit 5
-
-// Is there a way to revise this to be correct?
-        </code></pre>
+      <!-- R -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA3">R</a></h4>
+        </div>
+        <div id="collapseA3" class="panel-collapse collapse">
+          <pre><code class="language-javascript"> 
+  candidate.regions = pop$region_code[ pop$year==2016 & pop$rural_pop >= 20000000 & pop$region_type == 'C' ]
+  tbl = gdp[ gdp$region_code %in% candidate.regions & gdp$year == 2000, ]
+  top = order(tbl$gdp_pcap, decreasing = T)[1:5]
+  tbl[top, ]
+          </code></pre>
+        </div>
       </div>
-    </div>
 
-    <!-- R -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title"><a data-toggle="collapse" href="#collapseA3">R</a></h4>
-      </div>
-      <div id="collapseA3" class="panel-collapse collapse">
-        <pre><code class="language-javascript"> 
-candidate.regions = pop$region_code[ pop$year==2016 & pop$rural_pop >= 20000000 & pop$region_type == 'C' ]
-tbl = gdp[ gdp$region_code %in% candidate.regions & gdp$year == 2000, ]
-top = order(tbl$gdp_pcap, decreasing = T)[1:5]
-tbl[top, ]
-        </code></pre>
-      </div>
     </div>
 
   </div>
 
-</div>
 
+  <!-- BOTTOM OF PAGE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<!-- BOTTOM OF PAGE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <div class="container"> <a href="#topspace">return to top</a></div>
+  <div class="container"> <a href="q1_answers.xlsx">download module 1 sheet</a></div>
+  <br><br><br><br>
 
-<div class="container"> <a href="#topspace">return to top</a></div>
-<div class="container"> <a href="q1_answers.xlsx">download module 1 sheet</a></div>
-<br><br><br><br>
+  <footer class="footer">
+        <div class="container">
+          <span>Created in 2018 for Stanford IPS Students</span>
+        </div>
+  </footer>
 
-<footer class="footer">
-      <div class="container">
-        <span>Created in 2018 for Stanford IPS Students</span>
-      </div>
-</footer>
+</div> <!-- End of Main Column -->
 
 </body>
 </html>
