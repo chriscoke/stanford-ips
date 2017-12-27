@@ -14,8 +14,17 @@
 
 .footer {
   line-height: 60px;
-  background-color: #4682B4;
-  color: #FFFFFF;
+  /*background-color: #4682B4;*/
+  /*color: #FFFFFF;*/
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 900px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: #4682B4;
+  color: #A9A9A9;
 }
 
 /* NAVBAR STUFF */
