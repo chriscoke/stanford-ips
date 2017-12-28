@@ -28,6 +28,7 @@
 }
 
 /* NAVIGATION SIDEBAR */
+
 .sidebar-module{
     background-color: #ecf9f2;
     padding-right: 15px;
@@ -35,6 +36,8 @@
     padding-top: 15px;
     padding-bottom: 15px;
 }
+
+/* HOMEPAGE MODULES */
 
 .col-lg-6{
     background-color: #ecf9f2;
