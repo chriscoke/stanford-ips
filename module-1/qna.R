@@ -1,7 +1,7 @@
 
-gdp = read.csv("~/../Documents/Keep/Data Blog/gdppcap_data_normed.csv")
-pop = read.csv("~/../Documents/Keep/Data Blog/rurpop_data_normed.csv")
-health = read.csv("~/../Documents/Keep/Data Blog/health_data_normed.csv")
+gdp = read.csv("~/Downloads/gdppcap_data_normed.csv")
+pop = read.csv("~/Downloads/rurpop_data_normed.csv")
+health = read.csv("~/Downloads/health_data_normed.csv")
 
 #########################################################################################
 # QUESTION 1: MATH AND STATISTICS
