@@ -66,7 +66,30 @@ mysql: [Warning] Using a password on the command line \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
 
 \f0 \cf0 \cb1 \CocoaLigature1 \
+#############################################\
+# MYSQL ADDING NEW USERS\
 \
+# create the users\
+CREATE USER 'jeffrey\'92@\'91%\'92\
+  IDENTIFIED BY 'new_password' \
+\
+# drop a users\
+\pard\pardeftab720
+\cf0 DROP USER 'jeffrey\'92@\'91%\'92;\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 # Grant read-only\
+grant select on database_name.* to 'read-only_user_name'@'%' identified by 'password';\
+flush privileges;\
+\
+# to view all users\
+SELECT * FROM mysql.user;\
+\
+\
+CREATE USER "jeffrey"@"%" IDENTIFIED BY "1234";\
+GRANT SELECT on stanford_ips.* to "jeffrey"@"%" identified by "1234";\
+flush privileges;\
+SELECT * FROM mysql.user;\
 \
 #############################################\
 # Other NOTES\
@@ -76,7 +99,8 @@ Longer timeout settings: \
 {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/15712512/mysql-workbench-how-to-keep-the-connection-alive"}}{\fldrslt \cf0 https://stackoverflow.com/questions/15712512/mysql-workbench-how-to-keep-the-connection-alive}}\
 \
 Indexing best practice:\
-{\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/3049283/mysql-indexes-what-are-the-best-practices"}}{\fldrslt https://stackoverflow.com/questions/3049283/mysql-indexes-what-are-the-best-practices}}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+{\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/3049283/mysql-indexes-what-are-the-best-practices"}}{\fldrslt \cf0 https://stackoverflow.com/questions/3049283/mysql-indexes-what-are-the-best-practices}}\
 \
 \
 ################\
@@ -96,5 +120,9 @@ setup: {\field{\*\fldinst{HYPERLINK "https://aws.amazon.com/getting-started/tuto
 
 \f0 \cf0 \cb1 \CocoaLigature1 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
-\cf0 \
+\cf0 AWS username = chris.r.coke@gmail.com\
+AWS password = @amazon1986\
+\
+\
+\
 }
