@@ -72,12 +72,220 @@
 <div class="col-sm-8 blog-main">      
 
   <div class="container">
-  	<h1> Question 1 </h1>
-  	<h3> Math and Statistics Calculations </h3>
+  	<h1> Module 1 Data Overview </h1>
+    <br>
+    <h3> Sources </h3>
   </div>
-
+  <br><br>
   <div class="container">
-    <p> The purpose of this question is to demonstrate these programs' utility as calculators.  All scientific programming languages -- e.g. MATLAB, python, and many others -- are going to have these functionalities built in.  From as simple as <i>1 + 1 = 2</i> to as challenging as a <i>correlation</i> formula.  Each program has its own syntax, and this is a great place to start to unfold it and learn it. At the end of this question, you should have a general sense of what operations are easy, and which are challenging, across Microsoft's Excel, R, and Oracle's MySQL.</p>  
+    <p> The data for this module is sourced from the <a href="https://data.worldbank.org/" target="_blank">World Bank's Open Data site</a>. There are three data sets selected:
+    <br><br>  
+    </p>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Description</th>
+          <th>Webpage</th>
+          <th>Original Data</th>
+          <th>Formatted CSVs</th>
+          <th>Normalized Tables</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">GDP Per Capita</th>
+          <td>Gross Domestic Product by population, in US Dollars</td>
+          <td><a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.CD" target="_blank">link</a></td>
+          <td><a href="http://api.worldbank.org/v2/en/indicator/NY.GDP.PCAP.CD?downloadformat=csv">raw</a></td>
+          <td><a href="gdppcap_data.csv">formatted</a></td>
+          <td><a href="gdppcap_data_normed.csv">normalized</a></td>
+        </tr>
+        <tr>
+          <th scope="row">Rural Population</th>
+          <td>World Bank staff estimates based on the United Nations Population Division's World Urbanization Prospects</td>
+          <td><a href="https://data.worldbank.org/indicator/SP.RUR.TOTL" target="_blank">link</a></td>
+          <td><a href="http://api.worldbank.org/v2/en/indicator/SP.RUR.TOTL?downloadformat=csv">raw</a></td>
+          <td><a href="rurpop_data.csv">formatted</a></td>
+          <td><a href="rurpop_data_normed.csv">normalized</a></td>
+        </tr>
+        <tr>
+          <th scope="row">Public Expenditure on Healthcare</th>
+          <td>Percent of government health expenditure out of the total public + private health expenditure for a region</td>
+          <td><a href="https://data.worldbank.org/indicator/SH.XPD.PUBL" target="_blank">link</a></td>
+          <td><a href="http://api.worldbank.org/v2/en/indicator/SH.XPD.PUBL?downloadformat=csv">raw</a></td>
+          <td><a href="health_data.csv">formatted</a></td>
+          <td><a href="health_data_normed.csv">normalized</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+
+    <h3> Viewing the data in Excel </h3>
+    <br>
+    <p>
+      I'd <b>first</b> recommend opening the data in Excel and getting acclimated.  You can download that here:
+      <br><br>
+      <a href="world_bank_data.xlsx">Consolidated .XLS File with all Data</a>
+    </p>
+
+    <br>
+    
+    <h3> A Note on Normalization </h3>
+    <br>
+    <p> 
+      The first thing you'll notice is there are two sheets for each data source, one having a title of <code>NORM</code>.  You can google "data normalization" to get a lot more information on this, but here are the basics. <br><br> Normalization is such that each column corresponds to a single data value. The idea is to have <i>longer</i> tables rather than <i>wider</i> tables. The World Bank provides their data in a non-normalized format.  One of the columns, for example, is "1960" which is actually the GDP per Capita for a certain country in the year 1960. The normalized way to store this - and in fact, the more efficient way - is to collapse all of the columns 1960-2016 into just two columns: one for year, and one for GDP per capita. I've done this for you. You certainly don't need to normalize your data to analyze it.  However, you will find that (a) most data sets are already normalized, and (b) it's much easier to analyze a normalized dataset in Excel (pivot tables), SQL, and R.
+    </p>
+
+    <br>
+
+    <h3> Viewing the data in R </h3>
+    <br>
+    <p> 
+      In order to load the data into R, you first need to download the .csv files (PSA: "csv" stands for comma-separated values. When Excel opens these files, it understands that each new cell is created where there is a "," separating two values). You can click on each of the <code>formatted</code> and <code>normalized</code> links in the table above. Once you've done that, enter the follow lines into RStudio to load the data.  Make note of the location where you saved the downloaded files.
+    </p>
+    <pre><code class="language-javascript"> 
+// On a Mac, having saved the files to my Downloads folder
+// I'm only loading in the normalized data here
+
+gdp = read.csv("~/Downloads/gdppcap_data_normed.csv")                 // shorthand using ~
+gdp = read.csv("/Users/chriscoke/Downloads/gdppcap_data_normed.csv")  // equivalent, if you sub in your computer's username for [chriscoke]
+
+pop = read.csv("~/Downloads/rurpop_data_normed.csv")
+health = read.csv("~/Downloads/health_data_normed.csv")
+    </code></pre>  
+    <pre><code class="language-javascript"> 
+// Some simple ways to explore the data
+
+head(gdp)
+dim(gdp)
+nrow(gdp)
+ncol(gdp)
+summary(gdp)
+mean(gdp$gdp_pcap, na.rm=T)
+    </code></pre>  
+    <br>
+
+    <h3> Viewing the data in SQL </h3>
+    <br>
+    <p> Once you've connected to the IPS database, you can use these query examples below to explore the data in their table form.</p>
+    <pre><code class="language-javascript"> 
+// View what's in the tables (before normalization)
+
+select * 
+from gdp_pcap_nonorm 
+limit 10
+
+select * 
+from rural_pop_nonorm 
+limit 10
+
+select * 
+from health_exp_nonorm 
+limit 10
+    </code></pre>  
+    <pre><code class="language-javascript"> 
+// View what's in the tables (after normalization)
+
+select * 
+from gdp_pcap
+limit 10
+
+select * 
+from rural_pop
+limit 10
+
+select * 
+from health_exp
+limit 10
+    </code></pre>  
+    <pre><code class="language-javascript"> 
+// Where clauses: Look at a few countries and years
+// Note that I'm only using normalized tables from here on out with SQL
+
+select * 
+from health_exp
+where region_code = 'USA'
+
+select * 
+from health_exp
+where region_code in ('USA','ITA')
+
+select * 
+from health_exp
+where region_code in ('USA','ITA')
+order by region_code asc, year desc
+
+select region_name, year, health_exp
+from health_exp
+where year = 2010
+
+select region_name, year, health_exp
+from health_exp
+where year between 2010 and 2011
+    </code></pre>  
+    <pre><code class="language-javascript"> 
+// join clauses: bring some tables together
+
+select *
+from rural_pop rp
+join gdp_pcap gdp 
+  on gdp.region_code = rp.region_code 
+  and gdp.year = rp.year
+where rp.region_code = 'USA' and rp.year=2000
+
+select rp.*, gdp.gdp_pcap
+from rural_pop rp
+join gdp_pcap gdp 
+  on gdp.region_code = rp.region_code 
+  and gdp.year = rp.year
+where rp.region_code = 'USA' and rp.year=2000
+
+select rp.*, he.health_exp, gdp.gdp_pcap
+from rural_pop rp
+join gdp_pcap gdp on gdp.region_code = rp.region_code and gdp.year = rp.year
+join health_exp he on he.region_code = rp.region_code and he.year = rp.year
+where rp.region_code = 'USA' and rp.year='2000'
+    </code></pre>  
+    <pre><code class="language-javascript"> 
+// group by clauses: averages
+
+select he.region_name, avg(he.health_exp)
+from health_exp he
+where he.region_code = 'USA'
+group by he.region_name
+
+// view the underlying data to that calculation (no grouping)
+
+select he.region_name, he.year, he.health_exp
+from health_exp he
+where he.region_code = 'USA'
+    </code></pre>  
+    <pre><code class="language-javascript"> 
+// Understanding data types (integers, strings or characters, float)
+
+// NULLS
+select he.region_code, he.year, he.health_exp
+from health_exp he
+where he.region_code = 'USA'
+and year in (2014,2015) 
+
+select he.region_code, sum(he.health_exp) as sum_health, avg(he.health_exp) as avg_health
+from health_exp he
+where he.region_code = 'USA'
+and year in (2014,2015) 
+group by he.region_code
+
+// Operations on Strings or Characters vs. Integers or Floats
+select he.region_code, avg(he.region_name), avg(he.year)
+from health_exp he
+where he.region_code = 'USA'
+and year in (2014,2015) 
+group by he.region_code
+    </code></pre>  
+  
   </div>
 
   
