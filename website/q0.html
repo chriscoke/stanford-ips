@@ -126,7 +126,7 @@
     <h3> Viewing the data in Excel </h3>
     <br>
     <p>
-      I'd <b>first</b> recommend opening the data in Excel and getting acclimated.  You can download that here:
+      I'd <b>first</b> recommend opening the data in Excel and getting acclimated.  You can download it here:
       <br><br>
       <a href="world_bank_data.xlsx">Consolidated .XLS File with all Data</a>
     </p>
@@ -136,7 +136,7 @@
     <h3> A Note on Normalization </h3>
     <br>
     <p> 
-      The first thing you'll notice is there are two sheets for each data source, one having a title of <code>NORM</code>.  You can google "data normalization" to get a lot more information on this, but here are the basics. <br><br> Normalization is such that each column corresponds to a single data value. The idea is to have <i>longer</i> tables rather than <i>wider</i> tables. The World Bank provides their data in a non-normalized format.  One of the columns, for example, is "1960" which is actually the GDP per Capita for a certain country in the year 1960. The normalized way to store this - and in fact, the more efficient way - is to collapse all of the columns 1960-2016 into just two columns: one for year, and one for GDP per capita. I've done this for you. You certainly don't need to normalize your data to analyze it.  However, you will find that (a) most data sets are already normalized, and (b) it's much easier to analyze a normalized dataset in Excel (pivot tables), SQL, and R.
+      The first thing you'll notice is there are two sheets for each data source, one having a title of <code>NORM</code>.  You can google "data normalization" to get a lot more information on this, but here are the basics. <br><br> Normalization is such that each column corresponds to a single data value. The idea is to have <i>longer</i> tables rather than <i>wider</i> tables. The World Bank provides their data in a non-normalized format.  One of the columns, for example, is "1960" which is actually the GDP per Capita for a certain country in the year 1960. The normalized way to store this - and in fact, the more efficient way - is to collapse all of the columns 56 columns (1960 to 2016) into just 2 columns: one for year, and one for GDP per capita. I've done this for you. You certainly don't need to normalize your data to analyze it.  However, you will find that (a) most data sets are already normalized, and (b) it's much easier to analyze a normalized dataset in Excel (pivot tables), SQL, and R.
     </p>
 
     <br>
@@ -144,7 +144,7 @@
     <h3> Viewing the data in R </h3>
     <br>
     <p> 
-      In order to load the data into R, you first need to download the .csv files (PSA: "csv" stands for comma-separated values. When Excel opens these files, it understands that each new cell is created where there is a "," separating two values). You can click on each of the <code>formatted</code> and <code>normalized</code> links in the table above. Once you've done that, enter the follow lines into RStudio to load the data.  Make note of the location where you saved the downloaded files.
+      In order to load the data into R, you first need to download the .csv files (PSA: "csv" stands for comma-separated values. When Excel opens these files, it understands that each new cell is created where there is a "," separating two values). You can click on each of the <code>formatted</code> and <code>normalized</code> links in the table above. Once you've done that, enter the following lines into RStudio to load the data.  Make note of the location where you saved the downloaded files.
     </p>
     <pre><code class="language-javascript"> 
 // On a Mac, having saved the files to my Downloads folder
