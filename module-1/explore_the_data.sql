@@ -13,7 +13,7 @@ select *
 from health_exp_nonorm 
 limit 10
 
--- View what's in the tables
+-- View what's in the tables (after normalization)
 
 select * 
 from gdp_pcap
@@ -52,7 +52,7 @@ from health_exp
 where year between 2010 and 2011
 
 
--- join clauses: bring the tables together
+-- join clauses: bring some tables together
 
 select *
 from rural_pop rp
