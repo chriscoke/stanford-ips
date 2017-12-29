@@ -1,0 +1,175 @@
+<html>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="prism.css">
+<link rel="stylesheet" href="extra_style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="prism.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+
+
+<body>
+
+<!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="home.html">Data Analysis Curriculum</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="setup.html">Getting Set Up</a></li>
+            <li><a href="resources.html">Other Resources</a></li>
+            <li><a href="about.html">About</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Modules <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="module1_home.html">1: Data Manipulation</a></li>
+                <li><a href="module_tbd.html">2: Visualization</a></li>
+                <li><a href="module_tbd.html">3: Data Structures</a></li>
+                <li><a href="module_tbd.html">4: Bootstrapping</a></li>
+                <li><a href="module_tbd.html">5: Mapping</a></li>
+                <li><a href="module_tbd.html">6: Text Analysis</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+<div id="topspace"><br><br><br><br></div>
+
+<div class="container">
+  
+  <h1> Stack Exchange </h1>
+  <br>
+  <p> Before getting into any programs or coding languages, you should be introduced to the best educational resource on the planet: <a href="https://stackexchange.com/">Stack Exchange</a>.  Its value cannot be understated.  The site is simply a Q&A forum for certain topics.  For instance, <a href="https://stackoverflow.com/">Stack Overflow</a> is the site for programming questions. There is also one for <a href="https://math.stackexchange.com/">Math questions</a> , and if you're so inclined, even one for cooking questions (aptly named, <a href="https://cooking.stackexchange.com/">Seasoned Advice</a>). The community that has developed around this site is knowledgable and deep.  If you ever have a programming question on syntax or method, google it with "stack overflow" to get some excellent answers.  Anyone that has spent time programming (and I'm including R) will corroborate that this is an indispensible service.<br><br> Now, on to the installations...</p>
+
+</div>
+
+<div class="container">
+	
+  <h1> Microsoft Excel </h1>
+  <br>
+
+  <h4> <b> Overview </b></h4>
+  <p> Excel is a spreadsheet-based software.  Unlike SQL and R (and all programming languages), it is not command-based but rather interface-based.  This means that rather than writing out a line of code that says "take A + B", you open a spreadsheet and interact with a menu bar and other commonplace functionalities of a graphic interface.  Excel is used everywhere, and its utility should not be overlooked.</p>
+  <br>
+  
+  <h4> <b> Tutorials </b></h4>
+  <p> This site presumes some basic familiarity with Excel and knowledge of syntax.  If you'd like to get your feet wet with a basic tutorial, Microsoft offers some video-based training here: </p>
+  <a href="https://support.office.com/en-us/article/Excel-video-training-9bc05390-e94c-46af-a5b3-d7c22f6990bb" target="_blank">MS Excel Video Tutorials</a>
+  <br><br>
+  
+  <h4> <b> Installation </b></h4>
+  <p> 
+    This is not a free program, but it should be installed on most computers (in the universe), including those in the Library. If you are so inclined to purchase a copy: <br><br>
+    <a href="https://www.microsoft.com/en-us/store/d/excel-2016/cfq7ttc0k5f3?activetab=pivot%3aoverviewtab" target="_blank"> Excel For Windows</a> <br>
+    <a href="https://www.microsoft.com/en-us/store/d/excel-2016-for-mac/cfq7ttc0k5f2" target="_blank"> Excel For Mac</a> <br><br>
+    Another option is to utilize Google's free "Sheets" program.  In recent years, it now has almost all the same functionality of Excel. <br>
+    Navigate to drive.google.com, and then open a new sheet. Screenshot below. 
+  </p> 
+  <a href="google_sheets.png" data-fancybox data-caption="Opening a new Google Sheet">
+    <img src="small_thumbnail.png" alt="" />
+  </a>
+
+</div>
+
+<br><br><br>
+
+<div class="container">
+  <h1> MySQL </h1>
+  <br>
+  <h4> <b> Overview </b></h4>
+  <p> 
+    SQL, or Structured Query Language, is a programming language developed to store (and then access) data in a relational database format.  It's extremely common to organizations that collect their own data. Take the Stanford Bookstore website, as an example.  The catalog of items displayed on the page is surely referencing a table in a relational database that says which items are in- or out of- stock.  And if you login, then your email likely also gets recorded in another table for site visitors.  This type of data storage is what would allow you to "save your shopping cart" and come back to it later.  And for the data analyst, SQL is the language used to access this stored data.<br><br> 
+    
+    While the Stanford Bookstore example probably doesn't resonate with your career, I'm including SQL on this site for two reasons.  First, even if you aren't accessing data stored in a "SQL server", you can still set one up to store your own data and utilize the simplicity of SQL to manipulate your data.  Second, understanding SQL is a great foundation for manipulating data in R, Excel, and even Python or other languages. In fact, these all borrow heavily from SQL.  R's "dplyr" package uses SQL-style syntax; Excel's pivot tables are a visual implementation of SQL code. <br><br>
+
+    It's important to note that there are a few different versions of SQL.  "MySQL" is one of them.  Others include "SQL Server" and "PostgreSQL".  Each will have some subtle differences; keep this in mind as you are looking at Stack Overflow forums or googling "help with sql code ___". For this site, all SQL references are effectively in MySQL.
+  </p> 
+  <br>
+  <h4><b> Tutorials </b></h4>
+  <p>If you've never opened up a SQL client, or don't know the difference between a join and a union, then I'd advise first taking a basic tutorial. This will get you acclimated. (If you are reading this and can recommend a better tutorial, please do!).  You should ignore anything related to setting up a SQL database (e.g. "creating tables" or "indexing"). These are more advanced topics related to setting up your own database.</p>
+  <a href="https://www.w3schools.com/sql/" target="_blank">MySQL Tutorial</a>
+  <br><br>
+  <h4> <b> Installation </b></h4>
+  <p>
+    I've set up a database already, and loaded the necessary datasets for each Module into the database. This skips a complicated step for you, and is realisitc when working with data: most likely, a software engineer has already built a SQL database, and you are simply accessing it to get data.<br><br>
+    <ol>
+      <li>Download MySQL WorkBench, <a href="https://dev.mysql.com/downloads/workbench/">here</a>. Follow the wizard for installation based on if you are using a Mac or Windows.</li>
+      <li>Open up the program. You should see something that looks like this:</li><br>
+        <a href="mysql_connections.png" data-fancybox data-caption="MySQl WorkBench Starting Page"><img src="small_thumbnail.png" alt="" /></a><br><br>
+      <li> Click on the + sign next to "MySQL Connections"</li><br>
+        <a href="mysql_newconnect.png" data-fancybox data-caption="MySQl WorkBench Starting Page"><img src="small_thumbnail.png" alt="" /></a><br><br>
+        <ul>
+          <li>In Hostname, enter: ips.c1gtakhzeor1.us-east-1.rds.amazonaws.com</li>
+          <li>In Port, enter: 3306</li>
+          <li>In Username, enter: chriscoke</li>
+          <li>In Password, click Store in Vault and then enter: stanfordips</li>
+          <li>Finally, click Test Connection to make sure you've entered in the detals properly. Remember that you have to be connected to the internet for this</li>
+          <li>Another window should open that looks like this:</li><br>
+          <a href="mysql_firstopen.png" data-fancybox data-caption="MySQl WorkBench Starting Page"><img src="small_thumbnail.png" alt="" /></a><br><br>
+        </ul>
+      <li>For a quick tour, type the following into... </li>
+    </ol>
+    <p class="q">You can now use this database to practice your SQL tutorial!</p>
+  </p>
+
+</div>
+
+<div class="container">
+  <h1> R </h1>
+  <br>
+
+  <h4> <b> Overview </b></h4>
+  <p> R is a statistical programming language.  By now, you've most likely come into contact with it from the IPS, PoliSci, or Econ curriculum.  Its open-source nature has allowed it to develop extensively over the years, and remains a favorite for academics and professionals.  You may have found that Python is widely used in data analysis and data science circles. This is true. However, unless you intend to be a data engineer, R will suit you well and -- like Excel and SQL -- you will find an extremely wide base of people also using R.</p>
+  <br>
+  
+  <h4> <b> Tutorials </b></h4>
+  <p> There are too many to list, and I hope the best ones will be found and posted here later. For a start: </p>
+  <a href="https://www.statmethods.net/r-tutorial/index.html" target="_blank">R Basics</a><br>
+  <a href="https://www.youtube.com/playlist?list=PLqzoL9-eJTNBDdKgJgJzaQcY6OXmsXAHU" target="_blank">R Videos</a><br>
+  <a href="http://www.r-tutor.com/r-introduction" target="_blank">R Tutorial</a><br>
+  <br><br>
+  
+  <h4> <b> Installation </b></h4>
+  <p> 
+    Remember to draw the distinction between "R" and "RStudio".  The former is the programming language, and the latter is an IDE (integrated development environment). With a bad analogy, R is the airplane and Rstudio is the airport.  You cannot run RStudio without first installing R.  I would fully recommend using RStudio for all of your projects.
+  </p> 
+  <a href="https://cran.cnr.berkeley.edu/" target="_blank">Download R</a><br>
+  <a href="https://www.rstudio.com/products/rstudio/download/#download" target="_blank">Download RStudio</a><br><br>
+  <p><i>Where relevant, click the link that is specific to your computer (Mac or Windows), and follow links for "Installers"</i></p>
+
+  <p> Once downloaded, you should open the program and see something that looks like this.  I can include a more detailed tour in the future if it would help.</p><br>
+  <a href="r_open.png" data-fancybox data-caption="When RStudio is first opened"><img src="small_thumbnail.png" alt="" /></a><br><br>
+  <p> To get started, navigate to a new R script</p><br>
+  <a href="r_newfile.png" data-fancybox data-caption="Starting a new script"><img src="small_thumbnail.png" alt="" /></a><br><br>
+  <p> This will open the 4th window in the 4-way pane, and an "Untilted" tab should appear. You can type something in like "1+1" to test it out.</p><br>
+  <a href="r_firststep.png" data-fancybox data-caption="When a new script has been opened"><img src="small_thumbnail.png" alt="" /></a><br><br>
+
+</div>
+
+<!-- BOTTOM OF PAGE -->
+<br><br><br><br>
+<div class="container"> <a href="#topspace">return to top</a></div>
+<br><br>
+
+<footer class="footer">
+  <div class="container">
+    <span>Created in 2018 for Stanford IPS Students</span>
+  </div>
+</footer>
+
+</body>
+</html>
